@@ -20,6 +20,7 @@ jobs:
         run: npm ci
         env:
           DATABASE_URL: postgresql://placeholder:placeholder@localhost:5432/placeholder
+          DIRECT_URL: postgresql://placeholder:placeholder@localhost:5432/placeholder
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test

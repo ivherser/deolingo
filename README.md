@@ -99,19 +99,14 @@ npm run build
 - **Repetición espaciada:** cada tarjeta usa una variante simplificada de SM-2. Las valoraciones 1, 3, 4 y 5 corresponden a «Otra vez», «Difícil», «Bien» y «Fácil». Las tarjetas vencidas se muestran antes que las nuevas.
 - **Contenido:** actualiza o añade unidades, temas y palabras en `prisma/seed-data`. Mantén identificadores de semilla estables y valida los datos ejecutando `npm test`.
 
-## Despliegue en Vercel
+## Despliegue con Supabase + Vercel
 
-1. Importa el repositorio en Vercel.
-2. Crea una base PostgreSQL compatible, por ejemplo con Vercel Storage/Neon, y añade las variables de entorno del proyecto.
-3. Configura `DATABASE_URL` con la URL pooled `POSTGRES_PRISMA_URL`, añade `NEXTAUTH_SECRET` generado con `openssl rand -base64 32` y establece `NEXTAUTH_URL` en el dominio de producción.
-4. Usa `npm run vercel-build` como comando de compilación.
-5. Después de crear la base, carga el contenido una vez desde un entorno seguro con acceso a ella:
+1. En Supabase, abre **Connect → ORMs → Prisma** y copia las cadenas del pooler de transacciones y del pooler de sesión.
+2. En Vercel, configura `DATABASE_URL`, `DIRECT_URL`, `NEXTAUTH_SECRET` y `NEXTAUTH_URL` tanto para **Production** como para **Preview**. Usa la URL adecuada para cada entorno en `NEXTAUTH_URL`.
+3. `DATABASE_URL` debe usar el pooler de transacciones de Supabase (puerto `6543`) e incluir `?pgbouncer=true&connection_limit=1`. `DIRECT_URL` se usa para migraciones y debe usar el pooler de sesión (puerto `5432`). El host directo `db.<ref>.supabase.co` puede ser solo IPv6; usa el pooler de sesión para que las migraciones desde Vercel puedan conectarse.
+4. El script `vercel-build` ejecuta `prisma generate`, `prisma migrate deploy`, `prisma db seed` y `next build`. Las migraciones y el contenido inicial se aplican automáticamente en cada despliegue; la semilla usa upserts idempotentes.
 
-   ```bash
-   DATABASE_URL="URL_DE_LA_BASE" npx prisma db seed
-   ```
-
-   Vuelve a ejecutar `npx prisma db seed` después de desplegar cambios de contenido para cargar las unidades nuevas. No escribas la URL real en el repositorio ni en archivos versionados.
+Para Vercel Postgres, Neon u otro proveedor, usa la URL pooled en `DATABASE_URL` y configura `DIRECT_URL` con la URL no pooled. En Docker local, ambas variables pueden usar la misma URL de PostgreSQL en `localhost:5432`. No guardes credenciales reales en archivos versionados.
 
 ## Limitaciones conocidas
 
