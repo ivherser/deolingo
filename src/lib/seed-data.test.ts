@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { exerciseAnswerSchemas, exerciseDataSchemas, type ExerciseType } from "@/lib/exercises/types";
+import { CEFR_LEVELS } from "@/lib/levels";
 import { grammarTopics } from "../../prisma/seed-data/grammar";
 import { createExercises, type Phrase, units } from "../../prisma/seed-data/units";
 import { vocabulary } from "../../prisma/seed-data/vocabulary";
@@ -100,8 +101,8 @@ function validateExercises(
 }
 
 describe("seed data", () => {
-  it("contains ten units with at least six fully validated exercises per lesson", () => {
-    expect(units).toHaveLength(10);
+  it("contains fifteen units with at least six fully validated exercises per lesson", () => {
+    expect(units).toHaveLength(15);
     const ids = new Set<string>();
 
     for (const unit of units) {
@@ -118,6 +119,15 @@ describe("seed data", () => {
         }
         validateExercises(lesson.exercises);
       }
+    }
+  });
+
+  it("includes at least one unit for every supported CEFR level", () => {
+    for (const unit of units) {
+      expect(CEFR_LEVELS).toContain(unit.cefrLevel);
+    }
+    for (const level of CEFR_LEVELS) {
+      expect(units.some((unit) => unit.cefrLevel === level)).toBe(true);
     }
   });
 

@@ -235,6 +235,7 @@ const lessonDrafts: Array<{
   title: string;
   description: string;
   color: string;
+  cefrLevel: string;
   lessons: LessonDraft[];
 }> = [
   {
@@ -243,6 +244,7 @@ const lessonDrafts: Array<{
     title: "Saludos y presentaciones",
     description: "Di hola, preséntate y conoce a otras personas.",
     color: "#58CC02",
+    cefrLevel: "A1",
     lessons: [
       {
         id: "u01-l1",
@@ -297,6 +299,7 @@ const lessonDrafts: Array<{
     title: "Números y edad",
     description: "Cuenta, di tu edad y pregunta cuánto cuesta.",
     color: "#1CB0F6",
+    cefrLevel: "A1",
     lessons: [
       {
         id: "u02-l1",
@@ -351,6 +354,7 @@ const lessonDrafts: Array<{
     title: "La familia",
     description: "Presenta a tu familia y habla de las personas cercanas.",
     color: "#FFC800",
+    cefrLevel: "A1",
     lessons: [
       {
         id: "u03-l1",
@@ -405,6 +409,7 @@ const lessonDrafts: Array<{
     title: "Comida y bebida",
     description: "Pide algo para comer y habla de tus gustos.",
     color: "#FF4B4B",
+    cefrLevel: "A1",
     lessons: [
       {
         id: "u04-l1",
@@ -459,6 +464,7 @@ const lessonDrafts: Array<{
     title: "La casa",
     description: "Describe habitaciones, muebles y dónde están las cosas.",
     color: "#A560E8",
+    cefrLevel: "A1",
     lessons: [
       {
         id: "u05-l1",
@@ -513,6 +519,7 @@ const lessonDrafts: Array<{
     title: "Ciudad y transporte",
     description: "Pregunta por lugares y muévete por la ciudad.",
     color: "#1CB0F6",
+    cefrLevel: "A1",
     lessons: [
       {
         id: "u06-l1",
@@ -567,6 +574,7 @@ const lessonDrafts: Array<{
     title: "La hora y la rutina",
     description: "Cuenta la hora y describe un día normal.",
     color: "#FFC800",
+    cefrLevel: "A1",
     lessons: [
       {
         id: "u07-l1",
@@ -621,6 +629,7 @@ const lessonDrafts: Array<{
     title: "Ropa y compras",
     description: "Elige prendas, colores y tallas en una tienda.",
     color: "#FF4B4B",
+    cefrLevel: "A1",
     lessons: [
       {
         id: "u08-l1",
@@ -675,6 +684,7 @@ const lessonDrafts: Array<{
     title: "Trabajo y estudios",
     description: "Habla de tu profesión, tus estudios y tu lugar de trabajo.",
     color: "#A560E8",
+    cefrLevel: "A1",
     lessons: [
       {
         id: "u09-l1",
@@ -729,6 +739,7 @@ const lessonDrafts: Array<{
     title: "Tiempo libre y aficiones",
     description: "Cuenta qué haces cuando no estás trabajando o estudiando.",
     color: "#58CC02",
+    cefrLevel: "A1",
     lessons: [
       {
         id: "u10-l1",
@@ -777,6 +788,281 @@ const lessonDrafts: Array<{
       },
     ],
   },
+  {
+    id: "u11",
+    order: 11,
+    title: "Experiencias y conversaciones",
+    description: "Habla de lo que has hecho y practica el dativo.",
+    color: "#1CB0F6",
+    cefrLevel: "A2",
+    lessons: [
+      {
+        id: "u11-l1",
+        order: 1,
+        title: "Lo que hiciste ayer",
+        description: "Cuenta experiencias recientes en Perfekt.",
+        xpReward: 10,
+        phrases: [
+          { german: "Ich habe gestern Pizza gegessen.", spanish: "Ayer comí pizza.", spanishAlt: ["Ayer he comido pizza."], blankWord: "gegessen", explanation: "El Perfekt se forma con haben y el participio al final: habe gegessen." },
+          { german: "Wir haben einen Film gesehen.", spanish: "Hemos visto una película.", spanishAlt: ["Vimos una película."], blankWord: "gesehen", explanation: "sehen forma el participio irregular gesehen." },
+          { german: "Anna hat ihre Freundin besucht.", spanish: "Anna visitó a su amiga.", spanishAlt: ["Anna ha visitado a su amiga."], blankWord: "besucht", explanation: "besuchen forma el Perfekt con haben: hat besucht." },
+          { german: "Am Wochenende bin ich nach Berlin gefahren.", spanish: "El fin de semana viajé a Berlín.", spanishAlt: ["Durante el fin de semana fui a Berlín."], blankWord: "gefahren", explanation: "Los verbos de desplazamiento suelen formar el Perfekt con sein: bin gefahren." },
+          { german: "Hast du das Buch gelesen?", spanish: "¿Has leído el libro?", spanishAlt: ["¿Leíste el libro?"], blankWord: "gelesen", explanation: "lesen tiene el participio irregular gelesen." },
+          { german: "Die Kinder haben im Park gespielt.", spanish: "Los niños jugaron en el parque.", spanishAlt: ["Los niños han jugado en el parque."], blankWord: "gespielt", explanation: "spielen forma el participio regular gespielt." },
+        ],
+      },
+      {
+        id: "u11-l2",
+        order: 2,
+        title: "Ayudar y dar",
+        description: "Usa el dativo con verbos y preposiciones frecuentes.",
+        xpReward: 10,
+        phrases: [
+          { german: "Ich helfe meinem Bruder.", spanish: "Ayudo a mi hermano.", spanishAlt: ["Yo ayudo a mi hermano."], blankWord: "meinem", explanation: "helfen rige dativo: meinem Bruder." },
+          { german: "Der Tee schmeckt mir gut.", spanish: "El té me sabe bien.", spanishAlt: ["Me gusta el sabor del té."], blankWord: "schmeckt", explanation: "Con schmecken, la persona que prueba algo va en dativo: mir." },
+          { german: "Kannst du mir bitte helfen?", spanish: "¿Puedes ayudarme, por favor?", spanishAlt: ["¿Me puedes ayudar, por favor?"], blankWord: "helfen", explanation: "helfen rige dativo y, tras el modal kannst, aparece en infinitivo." },
+          { german: "Wir fahren mit dem Bus zur Arbeit.", spanish: "Vamos al trabajo en autobús.", spanishAlt: ["Viajamos al trabajo en autobús."], blankWord: "Bus", explanation: "mit siempre rige dativo: mit dem Bus." },
+          { german: "Sie spricht mit einer Kollegin.", spanish: "Habla con una compañera.", spanishAlt: ["Ella habla con una compañera."], blankWord: "Kollegin", explanation: "mit rige dativo; Kollegin lleva el artículo einer." },
+          { german: "Ich gebe dem Kind einen Apfel.", spanish: "Le doy una manzana al niño.", spanishAlt: ["Doy una manzana al niño."], blankWord: "Kind", explanation: "La persona que recibe va en dativo: dem Kind; el objeto va en acusativo." },
+        ],
+      },
+      {
+        id: "u11-l3",
+        order: 3,
+        title: "Un día lleno de planes",
+        description: "Combina el Perfekt con expresiones en dativo.",
+        xpReward: 10,
+        phrases: [
+          { german: "Gestern bin ich früh aufgestanden.", spanish: "Ayer me levanté temprano.", spanishAlt: ["Me levanté temprano ayer."], blankWord: "aufgestanden", explanation: "aufstehen forma el Perfekt con sein: bin aufgestanden." },
+          { german: "Wir haben im Restaurant zu Abend gegessen.", spanish: "Cenamos en el restaurante.", spanishAlt: ["Hemos cenado en el restaurante."], blankWord: "gegessen", explanation: "essen forma el participio irregular gegessen." },
+          { german: "Er hat seiner Mutter eine Nachricht geschrieben.", spanish: "Escribió un mensaje a su madre.", spanishAlt: ["Él le escribió un mensaje a su madre."], blankWord: "geschrieben", explanation: "La destinataria va en dativo: seiner Mutter; schreiben forma geschrieben." },
+          { german: "Nach der Arbeit habe ich meiner Schwester geholfen.", spanish: "Después del trabajo ayudé a mi hermana.", spanishAlt: ["Después de trabajar, ayudé a mi hermana."], blankWord: "geholfen", explanation: "helfen rige dativo; su participio es geholfen." },
+          { german: "Hast du deinem Freund schon geantwortet?", spanish: "¿Ya has respondido a tu amigo?", spanishAlt: ["¿Ya le respondiste a tu amigo?"], blankWord: "geantwortet", explanation: "antworten rige dativo: deinem Freund." },
+          { german: "Die Kinder sind mit dem Zug nach Köln gefahren.", spanish: "Los niños viajaron a Colonia en tren.", spanishAlt: ["Los niños fueron a Colonia en tren."], blankWord: "gefahren", explanation: "fahren expresa desplazamiento y forma el Perfekt con sein." },
+        ],
+      },
+    ],
+  },
+  {
+    id: "u12",
+    order: 12,
+    title: "Razones y opiniones",
+    description: "Explica motivos y expresa lo que piensas.",
+    color: "#A560E8",
+    cefrLevel: "B1.1",
+    lessons: [
+      {
+        id: "u12-l1",
+        order: 1,
+        title: "Weil, dass y wenn",
+        description: "Coloca el verbo al final con weil y dass.",
+        xpReward: 10,
+        phrases: [
+          { german: "Ich bleibe zu Hause, weil ich krank bin.", spanish: "Me quedo en casa porque estoy enfermo.", spanishAlt: ["Me quedo en casa porque estoy enferma."], blankWord: "bin", explanation: "En la subordinada con weil, el verbo conjugado bin va al final." },
+          { german: "Sie sagt, dass sie morgen kommt.", spanish: "Ella dice que viene mañana.", spanishAlt: ["Dice que mañana viene."], blankWord: "kommt", explanation: "Con dass, el verbo conjugado kommt cierra la subordinada." },
+          { german: "Wenn es regnet, nehmen wir den Bus.", spanish: "Si llueve, tomamos el autobús.", spanishAlt: ["Si llueve, cogemos el autobús."], blankWord: "regnet", explanation: "En una subordinada con wenn, regnet va al final." },
+          { german: "Er lernt viel, weil er die Prüfung bestehen möchte.", spanish: "Estudia mucho porque quiere aprobar el examen.", spanishAlt: ["Él estudia mucho porque quiere aprobar el examen."], blankWord: "möchte", explanation: "En la subordinada, el verbo conjugado möchte aparece después del infinitivo bestehen." },
+          { german: "Wir wissen, dass der Zug heute später fährt.", spanish: "Sabemos que hoy el tren va más tarde.", spanishAlt: ["Sabemos que el tren sale más tarde hoy."], blankWord: "fährt", explanation: "La subordinada con dass termina con el verbo conjugado fährt." },
+          { german: "Wenn du Zeit hast, können wir zusammen kochen.", spanish: "Si tienes tiempo, podemos cocinar juntos.", spanishAlt: ["Si tienes tiempo, podemos cocinar en compañía."], blankWord: "hast", explanation: "Con wenn, hast cierra la subordinada; la oración principal empieza con können." },
+        ],
+      },
+      {
+        id: "u12-l2",
+        order: 2,
+        title: "Explicar y afirmar",
+        description: "Da razones y transmite información con subordinadas.",
+        xpReward: 10,
+        phrases: [
+          { german: "Ich trage einen Mantel, weil es draußen kalt ist.", spanish: "Llevo un abrigo porque hace frío afuera.", spanishAlt: ["Llevo un abrigo porque fuera hace frío."], blankWord: "ist", explanation: "weil introduce una subordinada y el verbo ist va al final." },
+          { german: "Meine Lehrerin glaubt, dass ich die Prüfung bestehe.", spanish: "Mi profesora cree que aprobaré el examen.", spanishAlt: ["Mi profesora piensa que aprobaré el examen."], blankWord: "bestehe", explanation: "Con dass, bestehe aparece al final de la subordinada." },
+          { german: "Wir bleiben im Büro, weil noch viel Arbeit zu erledigen ist.", spanish: "Nos quedamos en la oficina porque aún queda mucho trabajo por hacer.", spanishAlt: ["Nos quedamos en la oficina porque todavía hay mucho trabajo pendiente."], blankWord: "ist", explanation: "En weil aún con una construcción de infinitivo, el verbo ist cierra la subordinada." },
+          { german: "Wenn ich Feierabend habe, treffe ich meine Freunde.", spanish: "Cuando termino de trabajar, quedo con mis amigos.", spanishAlt: ["Cuando salgo del trabajo, me reúno con mis amigos."], blankWord: "habe", explanation: "La subordinada con wenn termina en habe; después, treffe ocupa la primera posición de la principal." },
+          { german: "Er sagt, dass er morgen keine Zeit hat.", spanish: "Dice que mañana no tiene tiempo.", spanishAlt: ["Él dice que no tiene tiempo mañana."], blankWord: "hat", explanation: "El verbo hat va al final de la subordinada introducida por dass." },
+          { german: "Wenn man regelmäßig übt, macht man schnell Fortschritte.", spanish: "Si se practica con regularidad, se progresa rápido.", spanishAlt: ["Cuando uno practica con regularidad, avanza rápidamente."], blankWord: "übt", explanation: "En la subordinada con wenn, übt va al final." },
+        ],
+      },
+      {
+        id: "u12-l3",
+        order: 3,
+        title: "Planes y consecuencias",
+        description: "Combina weil, dass y wenn para contar situaciones.",
+        xpReward: 10,
+        phrases: [
+          { german: "Sie freut sich, weil sie die Stelle bekommen hat.", spanish: "Se alegra porque ha conseguido el puesto.", spanishAlt: ["Ella está contenta porque consiguió el puesto."], blankWord: "hat", explanation: "En la subordinada Perfekt con weil, el auxiliar hat queda al final." },
+          { german: "Ich hoffe, dass das Wetter morgen besser wird.", spanish: "Espero que mañana mejore el tiempo.", spanishAlt: ["Espero que mañana haga mejor tiempo."], blankWord: "wird", explanation: "La subordinada con dass termina con el verbo conjugado wird." },
+          { german: "Wenn wir früher losfahren, erreichen wir den Zug.", spanish: "Si salimos antes, llegaremos al tren.", spanishAlt: ["Si partimos más temprano, alcanzamos el tren."], blankWord: "losfahren", explanation: "En la subordinada con wenn, el verbo separable losfahren queda al final." },
+          { german: "Er kann nicht kommen, weil er bis spät arbeiten muss.", spanish: "No puede venir porque tiene que trabajar hasta tarde.", spanishAlt: ["Él no puede venir porque debe trabajar hasta tarde."], blankWord: "muss", explanation: "Con un verbo modal en la subordinada con weil, muss va al final." },
+          { german: "Das Kind schläft, wenn seine Mutter eine Geschichte vorliest.", spanish: "El niño duerme cuando su madre le lee un cuento.", spanishAlt: ["El niño se duerme cuando su madre le lee una historia."], blankWord: "vorliest", explanation: "El verbo separable vorliest cierra la subordinada con wenn." },
+          { german: "Wir glauben, dass unsere Nachbarn bald umziehen.", spanish: "Creemos que nuestros vecinos se mudarán pronto.", spanishAlt: ["Pensamos que nuestros vecinos se cambiarán de casa pronto."], blankWord: "umziehen", explanation: "La subordinada con dass termina con el infinitivo conjugado umziehen." },
+        ],
+      },
+    ],
+  },
+  {
+    id: "u13",
+    order: 13,
+    title: "Noticias y descripciones",
+    description: "Describe procesos y añade información sobre personas y lugares.",
+    color: "#FF9600",
+    cefrLevel: "B1.2",
+    lessons: [
+      {
+        id: "u13-l1",
+        order: 1,
+        title: "La voz pasiva",
+        description: "Forma la pasiva en presente y en pasado.",
+        xpReward: 10,
+        phrases: [
+          { german: "Das Essen wird täglich frisch zubereitet.", spanish: "La comida se prepara fresca cada día.", spanishAlt: ["La comida se prepara al momento todos los días."], blankWord: "zubereitet", explanation: "La pasiva en presente se forma con werden y el participio zubereitet." },
+          { german: "Die Briefe werden morgen verschickt.", spanish: "Las cartas se enviarán mañana.", spanishAlt: ["Mañana se envían las cartas."], blankWord: "verschickt", explanation: "En la pasiva, werden se conjuga y el participio verschickt va al final." },
+          { german: "Im Museum werden alte Gemälde gezeigt.", spanish: "En el museo se muestran cuadros antiguos.", spanishAlt: ["En el museo se exponen pinturas antiguas."], blankWord: "gezeigt", explanation: "La pasiva en presente usa werden más el participio gezeigt." },
+          { german: "Die Brücke wurde im letzten Jahr gebaut.", spanish: "El puente se construyó el año pasado.", spanishAlt: ["El puente fue construido el año pasado."], blankWord: "gebaut", explanation: "La pasiva en Präteritum se forma con wurde y el participio gebaut." },
+          { german: "Das Haus wurde 1920 erbaut.", spanish: "La casa se construyó en 1920.", spanishAlt: ["La casa fue edificada en 1920."], blankWord: "erbaut", explanation: "En la pasiva en pasado, wurde precede al participio erbaut." },
+          { german: "Die Türen wurden gestern repariert.", spanish: "Las puertas se repararon ayer.", spanishAlt: ["Ayer fueron reparadas las puertas."], blankWord: "repariert", explanation: "Con sujeto plural, la pasiva en Präteritum usa wurden." },
+        ],
+      },
+      {
+        id: "u13-l2",
+        order: 2,
+        title: "Personas y lugares",
+        description: "Usa oraciones de relativo para precisar una descripción.",
+        xpReward: 10,
+        phrases: [
+          { german: "Der Kuchen wird von meiner Schwester gebacken.", spanish: "Mi hermana hornea el pastel.", spanishAlt: ["El pastel lo hornea mi hermana."], blankWord: "gebacken", explanation: "La pasiva usa werden y el participio; von introduce a quien realiza la acción." },
+          { german: "Die Fenster wurden am Morgen geöffnet.", spanish: "Las ventanas se abrieron por la mañana.", spanishAlt: ["Por la mañana fueron abiertas las ventanas."], blankWord: "geöffnet", explanation: "wurden marca la pasiva en pasado para el sujeto plural." },
+          { german: "Die Fahrräder werden in dieser Werkstatt repariert.", spanish: "Las bicicletas se reparan en este taller.", spanishAlt: ["En este taller reparan las bicicletas."], blankWord: "repariert", explanation: "La pasiva en presente se forma con werden y el participio repariert." },
+          { german: "Kennst du den Kollegen, mit dem ich arbeite?", spanish: "¿Conoces al compañero con quien trabajo?", spanishAlt: ["¿Conoces al colega con el que trabajo?"], blankWord: "Kollegen", explanation: "La preposición mit rige dativo: mit dem; la relativa termina con arbeite." },
+          { german: "Das ist die Stadt, in der meine Eltern leben.", spanish: "Esa es la ciudad en la que viven mis padres.", spanishAlt: ["Esta es la ciudad donde viven mis padres."], blankWord: "Stadt", explanation: "En la relativa, in der concuerda con Stadt y leben va al final." },
+          { german: "Ich habe einen Film gesehen, der in Wien spielt.", spanish: "He visto una película que transcurre en Viena.", spanishAlt: ["Vi una película que se desarrolla en Viena."], blankWord: "spielt", explanation: "El pronombre relativo der concuerda con Film y el verbo spielt cierra la relativa." },
+        ],
+      },
+      {
+        id: "u13-l3",
+        order: 3,
+        title: "Historias y acontecimientos",
+        description: "Combina la voz pasiva con oraciones de relativo.",
+        xpReward: 10,
+        phrases: [
+          { german: "Die Regeln werden von allen Gästen beachtet.", spanish: "Todos los invitados respetan las reglas.", spanishAlt: ["Las reglas son respetadas por todos los invitados."], blankWord: "beachtet", explanation: "En la pasiva, werden va conjugado y beachtet al final." },
+          { german: "Das Paket wurde gestern zugestellt.", spanish: "El paquete se entregó ayer.", spanishAlt: ["Ayer fue entregado el paquete."], blankWord: "zugestellt", explanation: "wurde más el participio zugestellt expresa pasiva en pasado." },
+          { german: "Die Schauspielerin, die den Preis gewonnen hat, hält eine Rede.", spanish: "La actriz que ganó el premio da un discurso.", spanishAlt: ["La actriz que ha ganado el premio pronuncia un discurso."], blankWord: "gewonnen", explanation: "La relativa termina con el auxiliar hat después del participio gewonnen." },
+          { german: "Wir besuchen das Schloss, das im 18. Jahrhundert erbaut wurde.", spanish: "Visitamos el castillo que se construyó en el siglo XVIII.", spanishAlt: ["Visitaremos el castillo construido en el siglo XVIII."], blankWord: "erbaut", explanation: "En la relativa pasiva, erbaut precede al verbo conjugado wurde." },
+          { german: "Der Autor, dessen Roman wir lesen, kommt aus Österreich.", spanish: "El autor cuya novela leemos es de Austria.", spanishAlt: ["El escritor de cuya novela leemos es austríaco."], blankWord: "Roman", explanation: "dessen expresa posesión en la relativa; el verbo lesen queda al final." },
+          { german: "Die Kinder spielen auf dem Spielplatz, der neu renoviert wurde.", spanish: "Los niños juegan en el parque que se renovó hace poco.", spanishAlt: ["Los niños juegan en el parque infantil recién renovado."], blankWord: "Spielplatz", explanation: "La relativa describe Spielplatz y termina con la pasiva wurde renoviert." },
+        ],
+      },
+    ],
+  },
+  {
+    id: "u14",
+    order: 14,
+    title: "Posibilidades e hipótesis",
+    description: "Habla de deseos y situaciones imaginarias.",
+    color: "#FF4B4B",
+    cefrLevel: "B2.1",
+    lessons: [
+      {
+        id: "u14-l1",
+        order: 1,
+        title: "Si tuviera más tiempo",
+        description: "Expresa condiciones irreales con Konjunktiv II.",
+        xpReward: 10,
+        phrases: [
+          { german: "Wenn ich mehr Zeit hätte, würde ich ein Buch schreiben.", spanish: "Si tuviera más tiempo, escribiría un libro.", spanishAlt: ["Si tuviese más tiempo, escribiría un libro."], blankWord: "hätte", explanation: "hätte expresa una condición irreal; würde más infinitivo expresa su resultado." },
+          { german: "An deiner Stelle würde ich die Stelle annehmen.", spanish: "En tu lugar, aceptaría el puesto.", spanishAlt: ["Si estuviera en tu lugar, aceptaría el puesto."], blankWord: "annehmen", explanation: "würde se combina con el infinitivo annehmen al final." },
+          { german: "Ich wäre gern früher gekommen.", spanish: "Me habría gustado llegar antes.", spanishAlt: ["Habría querido llegar más temprano."], blankWord: "gekommen", explanation: "El Konjunktiv II pasado se forma con wäre y el participio gekommen." },
+          { german: "Wenn wir ein Auto hätten, könnten wir ans Meer fahren.", spanish: "Si tuviéramos coche, podríamos ir al mar.", spanishAlt: ["Si tuviésemos un coche, podríamos viajar a la costa."], blankWord: "könnten", explanation: "hätten plantea la condición irreal y könnten expresa la posibilidad." },
+          { german: "Sie würde öfter kochen, wenn sie eine größere Küche hätte.", spanish: "Cocinaría más a menudo si tuviera una cocina más grande.", spanishAlt: ["Ella cocinaría más a menudo si tuviese una cocina más amplia."], blankWord: "größere", explanation: "hätte introduce una condición irreal en la subordinada con wenn." },
+          { german: "Wenn ich an deiner Stelle wäre, würde ich mich entschuldigen.", spanish: "Si estuviera en tu lugar, me disculparía.", spanishAlt: ["Si yo fuera tú, pediría disculpas."], blankWord: "wäre", explanation: "wäre es el Konjunktiv II de sein y plantea una situación imaginaria." },
+        ],
+      },
+      {
+        id: "u14-l2",
+        order: 2,
+        title: "Deseos y consejos",
+        description: "Formula deseos y recomienda alternativas.",
+        xpReward: 10,
+        phrases: [
+          { german: "Es wäre schön, wenn du mitkommen könntest.", spanish: "Sería bonito que pudieras venir con nosotros.", spanishAlt: ["Estaría bien que pudieras acompañarnos."], blankWord: "könntest", explanation: "wäre y könntest son formas de Konjunktiv II para expresar un deseo." },
+          { german: "Wir hätten den Zug erreicht, wenn wir früher losgegangen wären.", spanish: "Habríamos alcanzado el tren si hubiéramos salido antes.", spanishAlt: ["Habríamos llegado al tren si hubiésemos partido antes."], blankWord: "losgegangen", explanation: "La condición irreal pasada usa wären más el participio losgegangen." },
+          { german: "Ich würde an deiner Stelle mit dem Chef sprechen.", spanish: "Yo hablaría con el jefe en tu lugar.", spanishAlt: ["En tu lugar, hablaría con el jefe."], blankWord: "sprechen", explanation: "würde más el infinitivo sprechen sirve para dar un consejo." },
+          { german: "Wenn ich mehr Urlaub hätte, würde ich länger verreisen.", spanish: "Si tuviera más vacaciones, viajaría durante más tiempo.", spanishAlt: ["Con más vacaciones, haría un viaje más largo."], blankWord: "verreisen", explanation: "hätte expresa la condición y würde verreisen el resultado imaginario." },
+          { german: "Wenn das Wetter besser wäre, könnten wir draußen essen.", spanish: "Si hiciera mejor tiempo, podríamos comer fuera.", spanishAlt: ["Si el tiempo estuviera mejor, podríamos comer al aire libre."], blankWord: "draußen", explanation: "wäre plantea una condición irreal y könnten expresa su consecuencia." },
+          { german: "Er wäre gern Arzt geworden.", spanish: "Le habría gustado ser médico.", spanishAlt: ["A él le habría gustado convertirse en médico."], blankWord: "geworden", explanation: "El deseo pasado se expresa con wäre y el participio geworden." },
+        ],
+      },
+      {
+        id: "u14-l3",
+        order: 3,
+        title: "Situaciones imaginarias",
+        description: "Habla de lo que habría pasado en otras circunstancias.",
+        xpReward: 10,
+        phrases: [
+          { german: "Ich hätte gern einen Kaffee ohne Zucker.", spanish: "Quisiera un café sin azúcar.", spanishAlt: ["Me gustaría tomar un café sin azúcar."], blankWord: "hätte", explanation: "hätte gern es una forma cortés de expresar un deseo." },
+          { german: "Es wäre besser, heute zu Hause zu bleiben.", spanish: "Sería mejor quedarse hoy en casa.", spanishAlt: ["Estaría mejor quedarse en casa hoy."], blankWord: "wäre", explanation: "wäre es el Konjunktiv II de sein y expresa una valoración hipotética." },
+          { german: "Sie würde mehr Geld sparen, wenn sie seltener einkaufen würde.", spanish: "Ahorraría más dinero si comprara con menos frecuencia.", spanishAlt: ["Ella ahorraría más dinero si fuera de compras menos a menudo."], blankWord: "seltener", explanation: "El comparativo seltener expresa menor frecuencia dentro de la condición irreal." },
+          { german: "Wenn ich früher aufgestanden wäre, hätte ich den Bus bekommen.", spanish: "Si me hubiera levantado antes, habría alcanzado el autobús.", spanishAlt: ["Si hubiese madrugado, habría llegado al autobús."], blankWord: "aufgestanden", explanation: "La condición pasada usa wäre aufgestanden y el resultado hätte bekommen." },
+          { german: "Wir wären ans Meer gefahren, wenn das Hotel günstiger gewesen wäre.", spanish: "Habríamos ido al mar si el hotel hubiera sido más barato.", spanishAlt: ["Habríamos viajado a la costa si el hotel hubiese costado menos."], blankWord: "günstiger", explanation: "günstiger gewesen wäre expresa una condición irreal en pasado." },
+          { german: "Mit einem größeren Balkon hätte die Wohnung mehr Licht.", spanish: "Con un balcón más grande, la vivienda tendría más luz.", spanishAlt: ["La casa tendría más luz con un balcón más amplio."], blankWord: "größeren", explanation: "hätte expresa lo que tendría la vivienda bajo una condición imaginaria." },
+        ],
+      },
+    ],
+  },
+  {
+    id: "u15",
+    order: 15,
+    title: "Argumentos y estilo formal",
+    description: "Conecta ideas y expresa información de manera concisa.",
+    color: "#58CC02",
+    cefrLevel: "B2.2",
+    lessons: [
+      {
+        id: "u15-l1",
+        order: 1,
+        title: "No solo…, sino también…",
+        description: "Usa conectores dobles para relacionar ideas.",
+        xpReward: 10,
+        phrases: [
+          { german: "Sie spricht nicht nur Deutsch, sondern auch Französisch.", spanish: "Habla no solo alemán, sino también francés.", spanishAlt: ["No solo habla alemán, sino también francés."], blankWord: "sondern", explanation: "nicht nur … sondern auch coordina dos elementos equivalentes." },
+          { german: "Je länger ich lerne, desto sicherer spreche ich.", spanish: "Cuanto más estudio, más segura hablo.", spanishAlt: ["Cuanto más tiempo estudio, más confianza tengo al hablar."], blankWord: "sicherer", explanation: "La estructura je … desto relaciona dos cambios proporcionales." },
+          { german: "Er ist sowohl freundlich als auch zuverlässig.", spanish: "Es amable y también de confianza.", spanishAlt: ["Es tanto amable como fiable."], blankWord: "zuverlässig", explanation: "sowohl … als auch equivale a «tanto … como»." },
+          { german: "Wir haben nicht nur das Essen bestellt, sondern auch einen Tisch reserviert.", spanish: "No solo pedimos la comida, sino que también reservamos una mesa.", spanishAlt: ["Además de pedir la comida, reservamos una mesa."], blankWord: "reserviert", explanation: "nicht nur … sondern auch conecta aquí dos acciones en Perfekt." },
+          { german: "Je öfter du übst, desto leichter wird die Prüfung.", spanish: "Cuanto más practicas, más fácil se vuelve el examen.", spanishAlt: ["Cuanto más a menudo practiques, más sencillo será el examen."], blankWord: "leichter", explanation: "En je … desto, los comparativos öfter y leichter muestran el cambio." },
+          { german: "Sie kann sowohl gut schreiben als auch überzeugend sprechen.", spanish: "Sabe escribir bien y también hablar de forma convincente.", spanishAlt: ["Puede tanto escribir bien como hablar con convicción."], blankWord: "überzeugend", explanation: "sowohl … als auch coordina dos infinitivos dependientes de kann." },
+        ],
+      },
+      {
+        id: "u15-l2",
+        order: 2,
+        title: "Cuanto más…, más…",
+        description: "Relaciona cantidades y usa un estilo más nominal.",
+        xpReward: 10,
+        phrases: [
+          { german: "Nach dem Ende der Sitzung gingen alle nach Hause.", spanish: "Al terminar la reunión, todos se fueron a casa.", spanishAlt: ["Después del final de la sesión, todos se fueron a casa."], blankWord: "Ende", explanation: "La expresión nach dem Ende usa un sustantivo para presentar el momento." },
+          { german: "Wegen des starken Regens wurde das Spiel unterbrochen.", spanish: "El partido se interrumpió por la lluvia intensa.", spanishAlt: ["Debido a la lluvia fuerte, se interrumpió el partido."], blankWord: "Regens", explanation: "wegen des Regens es una construcción nominal con genitivo." },
+          { german: "Trotz seiner Verspätung erreichte er den Zug.", spanish: "A pesar de su retraso, alcanzó el tren.", spanishAlt: ["Aunque llegó tarde, logró alcanzar el tren."], blankWord: "Verspätung", explanation: "trotz seiner Verspätung expresa contraste mediante un sustantivo." },
+          { german: "Die Teilnahme am Kurs ist kostenlos.", spanish: "La participación en el curso es gratuita.", spanishAlt: ["Participar en el curso no cuesta nada."], blankWord: "Teilnahme", explanation: "Teilnahme es un sustantivo derivado del verbo teilnehmen." },
+          { german: "Vor der Abreise kontrollieren wir die Tickets.", spanish: "Antes de salir, comprobamos los billetes.", spanishAlt: ["Antes de la salida, revisamos los billetes."], blankWord: "Abreise", explanation: "vor der Abreise emplea el sustantivo Abreise en dativo." },
+          { german: "Aufgrund einer technischen Störung wurde der Zug umgeleitet.", spanish: "El tren se desvió debido a un fallo técnico.", spanishAlt: ["A causa de una avería técnica, desviaron el tren."], blankWord: "Störung", explanation: "aufgrund einer Störung es una expresión nominal que suele llevar genitivo." },
+        ],
+      },
+      {
+        id: "u15-l3",
+        order: 3,
+        title: "Un estilo preciso",
+        description: "Combina conectores dobles y expresiones nominales.",
+        xpReward: 10,
+        phrases: [
+          { german: "Sowohl die Mitarbeitenden als auch die Leitung unterstützen den Vorschlag.", spanish: "Tanto el personal como la dirección apoyan la propuesta.", spanishAlt: ["El personal y la dirección respaldan la propuesta."], blankWord: "unterstützen", explanation: "sowohl … als auch coordina dos sujetos; por eso el verbo va en plural." },
+          { german: "Je früher wir anfangen, desto eher sind wir fertig.", spanish: "Cuanto antes empecemos, antes terminaremos.", spanishAlt: ["Cuanto más pronto empecemos, más pronto acabaremos."], blankWord: "früher", explanation: "je … desto compara dos circunstancias mediante los comparativos früher y eher." },
+          { german: "Wir brauchen nicht nur Zeit, sondern auch Geduld.", spanish: "Necesitamos no solo tiempo, sino también paciencia.", spanishAlt: ["Hacen falta tanto tiempo como paciencia."], blankWord: "Geduld", explanation: "nicht nur … sondern auch relaciona los dos objetos de brauchen." },
+          { german: "Bei der Anmeldung müssen alle Unterlagen eingereicht werden.", spanish: "Al inscribirse, hay que entregar todos los documentos.", spanishAlt: ["Durante la inscripción, deben presentarse todos los documentos."], blankWord: "Anmeldung", explanation: "Anmeldung es un sustantivo de acción; la oración también usa pasiva con modal." },
+          { german: "Die Verbesserung der Abläufe spart langfristig Zeit.", spanish: "La mejora de los procesos ahorra tiempo a largo plazo.", spanishAlt: ["Optimizar los procesos permite ahorrar tiempo a largo plazo."], blankWord: "Verbesserung", explanation: "Verbesserung nominaliza verbessern y funciona como sujeto." },
+          { german: "Nach sorgfältiger Prüfung wurde der Vertrag unterschrieben.", spanish: "Tras una revisión cuidadosa, se firmó el contrato.", spanishAlt: ["Después de examinarlo cuidadosamente, se firmó el contrato."], blankWord: "Prüfung", explanation: "Nach sorgfältiger Prüfung resume una acción mediante un sintagma nominal." },
+        ],
+      },
+    ],
+  },
 ];
 
 export const units = lessonDrafts.map((unit) => ({
@@ -785,7 +1071,7 @@ export const units = lessonDrafts.map((unit) => ({
   title: unit.title,
   description: unit.description,
   color: unit.color,
-  cefrLevel: "A1",
+  cefrLevel: unit.cefrLevel,
   lessons: unit.lessons.map(({ phrases, ...lesson }) => ({
     ...lesson,
     exercises: createExercises(lesson.id, phrases),

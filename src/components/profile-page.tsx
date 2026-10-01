@@ -4,8 +4,10 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import { CEFR_LEVEL_LABELS, cefrLevelSchema } from "@/lib/levels";
 
 const progressSchema = z.object({
+  selectedLevel: cefrLevelSchema,
   xp: z.number().int(),
   streak: z.number().int(),
   longestStreak: z.number().int(),
@@ -15,15 +17,18 @@ const progressSchema = z.object({
   totalLessons: z.number().int(),
   learnedWords: z.number().int(),
 });
-const unitsSchema = z.array(z.object({
-  id: z.string(),
-  title: z.string(),
-  lessons: z.array(z.object({ id: z.string(), completed: z.boolean() })),
-}));
+const unitsSchema = z.object({
+  level: cefrLevelSchema,
+  units: z.array(z.object({
+    id: z.string(),
+    title: z.string(),
+    lessons: z.array(z.object({ id: z.string(), completed: z.boolean() })),
+  })),
+});
 
 export function ProfilePage({ name, email }: { name: string; email: string }) {
   const [progress, setProgress] = useState<z.infer<typeof progressSchema> | null>(null);
-  const [units, setUnits] = useState<z.infer<typeof unitsSchema>>([]);
+  const [units, setUnits] = useState<z.infer<typeof unitsSchema>["units"]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -43,7 +48,7 @@ export function ProfilePage({ name, email }: { name: string; email: string }) {
     ])
       .then(([profile, unitList]) => {
         setProgress(profile);
-        setUnits(unitList);
+        setUnits(unitList.units);
       })
       .catch(() => setError("No pudimos cargar tus estadísticas."));
   }, []);
@@ -70,6 +75,7 @@ export function ProfilePage({ name, email }: { name: string; email: string }) {
       ) : (
         <>
           <section className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <ProfileStat icon="🇩🇪" label="Nivel" value={CEFR_LEVEL_LABELS[progress.selectedLevel]} color="#58a700" />
             <ProfileStat icon="⚡" label="Experiencia total" value={`${progress.xp} XP`} color="#1688bb" />
             <ProfileStat icon="🔥" label="Racha actual" value={`${progress.streak} días`} color="#d99b00" />
             <ProfileStat icon="🏆" label="Racha máxima" value={`${progress.longestStreak} días`} color="#b58b00" />

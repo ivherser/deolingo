@@ -30,6 +30,7 @@ model User {
 model UserProgress {
   id               String    @id @default(cuid())
   userId           String    @unique
+  selectedLevel    String    @default("A1")
   xp               Int       @default(0)
   streak            Int       @default(0)
   longestStreak     Int       @default(0)
