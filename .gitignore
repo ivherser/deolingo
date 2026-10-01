@@ -31,7 +31,22 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
+.env
+.env.*
+!.env.example
+
+# secrets and credentials
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+credentials.json
+serviceAccountKey.json
+**/secrets/
+**/secret.*
+*.credential
+token.json
 
 # vercel
 .vercel
@@ -39,3 +54,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE, OS, and infrastructure state
+.idea/
+.vscode/settings.json
+*.swp
+Thumbs.db
+*.tfstate
+*.tfstate.*
+.terraform/
