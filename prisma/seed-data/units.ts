@@ -854,7 +854,7 @@ const lessonDrafts: Array<{
       {
         id: "u12-l1",
         order: 1,
-        title: "Porque y que",
+        title: "Weil, dass y wenn",
         description: "Coloca el verbo al final con weil y dass.",
         xpReward: 10,
         phrases: [
