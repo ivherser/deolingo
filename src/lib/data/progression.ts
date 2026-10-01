@@ -4,19 +4,28 @@ import { gradeAnswer } from "@/lib/exercises/grading";
 import { parseExerciseData, type ExerciseType } from "@/lib/exercises/types";
 import { computeLessonXp, isLessonUnlocked, nextHeartAt, regenerateHearts, updateStreak } from "@/lib/gamification";
 import { LockedLessonError, MissingRecordError, NoHeartsError } from "@/lib/data/errors";
+import { cefrLevelSchema, type CefrLevel } from "@/lib/levels";
 
-const orderedLessonsQuery = {
+const orderedLessonsQuery = (cefrLevel: string) => ({
+  where: { unit: { cefrLevel } },
   orderBy: [{ unit: { order: "asc" as const } }, { order: "asc" as const }],
   select: { id: true },
-};
+});
 
 async function lessonUnlockState(
   client: Prisma.TransactionClient | typeof prisma,
   userId: string,
   lessonId: string,
 ) {
+  const targetLesson = await client.lesson.findUnique({
+    where: { id: lessonId },
+    select: { unit: { select: { cefrLevel: true } } },
+  });
+  if (!targetLesson) {
+    return false;
+  }
   const [lessons, completed] = await Promise.all([
-    client.lesson.findMany(orderedLessonsQuery),
+    client.lesson.findMany(orderedLessonsQuery(targetLesson.unit.cefrLevel)),
     client.lessonCompletion.findMany({ where: { userId }, select: { lessonId: true } }),
   ]);
   return isLessonUnlocked(
@@ -32,8 +41,17 @@ async function lockUserProgress(transaction: Prisma.TransactionClient, userId: s
 }
 
 export async function getUnitsForUser(userId: string) {
+  const progress = await prisma.userProgress.findUnique({
+    where: { userId },
+    select: { selectedLevel: true },
+  });
+  if (!progress) {
+    throw new MissingRecordError();
+  }
+  const level = cefrLevelSchema.parse(progress.selectedLevel);
   const [units, completed] = await Promise.all([
     prisma.unit.findMany({
+      where: { cefrLevel: level },
       orderBy: { order: "asc" },
       select: {
         id: true,
@@ -54,23 +72,26 @@ export async function getUnitsForUser(userId: string) {
   const orderedLessonIds = units.flatMap((unit) => unit.lessons.map(({ id }) => id));
   let currentAssigned = false;
 
-  return units.map((unit) => ({
-    id: unit.id,
-    order: unit.order,
-    title: unit.title,
-    description: unit.description,
-    color: unit.color,
-    cefrLevel: unit.cefrLevel,
-    lessons: unit.lessons.map((lesson) => {
-      const completedLesson = completedIds.has(lesson.id);
-      const unlocked = isLessonUnlocked(orderedLessonIds, completedIds, lesson.id);
-      const current = unlocked && !completedLesson && !currentAssigned;
-      if (current) {
-        currentAssigned = true;
-      }
-      return { ...lesson, completed: completedLesson, unlocked, current };
-    }),
-  }));
+  return {
+    level,
+    units: units.map((unit) => ({
+      id: unit.id,
+      order: unit.order,
+      title: unit.title,
+      description: unit.description,
+      color: unit.color,
+      cefrLevel: unit.cefrLevel,
+      lessons: unit.lessons.map((lesson) => {
+        const completedLesson = completedIds.has(lesson.id);
+        const unlocked = isLessonUnlocked(orderedLessonIds, completedIds, lesson.id);
+        const current = unlocked && !completedLesson && !currentAssigned;
+        if (current) {
+          currentAssigned = true;
+        }
+        return { ...lesson, completed: completedLesson, unlocked, current };
+      }),
+    })),
+  };
 }
 
 export async function getLessonForUser(userId: string, lessonId: string) {
@@ -264,6 +285,7 @@ export async function getProgressForUser(userId: string) {
       transaction.vocabularyReview.count({ where: { userId, repetitions: { gte: 1 } } }),
     ]);
     return {
+      selectedLevel: cefrLevelSchema.parse(updated.selectedLevel),
       xp: updated.xp,
       streak: updated.streak,
       longestStreak: updated.longestStreak,
@@ -274,4 +296,13 @@ export async function getProgressForUser(userId: string) {
       learnedWords,
     };
   });
+}
+
+export async function setSelectedLevel(userId: string, level: CefrLevel) {
+  const progress = await prisma.userProgress.update({
+    where: { userId },
+    data: { selectedLevel: level },
+    select: { selectedLevel: true },
+  });
+  return { selectedLevel: cefrLevelSchema.parse(progress.selectedLevel) };
 }

@@ -1,15 +1,19 @@
 # Deolingo
 
-Deolingo es una aplicación web para que hispanohablantes aprendan alemán de nivel A1 mediante una ruta de lecciones cortas, ejercicios con corrección inmediata, explicaciones de gramática y tarjetas de vocabulario con repetición espaciada.
+Deolingo es una aplicación web para que hispanohablantes aprendan alemán desde A1 hasta B2.2 mediante una ruta de lecciones cortas, ejercicios con corrección inmediata, explicaciones de gramática y tarjetas de vocabulario con repetición espaciada.
 
 ## Funcionalidades
 
-- Ruta progresiva de 10 unidades y 30 lecciones con desbloqueo secuencial.
+- Ruta de 15 unidades y 45 lecciones organizadas por nivel, con desbloqueo secuencial.
 - Ejercicios de traducción en ambas direcciones, opción múltiple, orden de palabras, completar frases y asociación.
 - Corazones que se recuperan con el tiempo, rachas de actividad y puntos de experiencia (XP).
 - Seis temas de gramática con explicaciones y práctica sin consumir corazones.
 - Vocabulario por temas, tarjetas reversibles y repaso programado.
 - Registro e inicio de sesión con correo y contraseña.
+
+## Niveles de alemán
+
+La ruta ofrece A1 (Principiante), A2 (Básico), B1.1 (Intermedio I), B1.2 (Intermedio II), B2.1 (Intermedio alto I) y B2.2 (Intermedio alto II). Puedes elegir cualquier nivel; cada uno comienza con su primera lección desbloqueada.
 
 ## Requisitos
 
@@ -107,7 +111,7 @@ npm run build
    DATABASE_URL="URL_DE_LA_BASE" npx prisma db seed
    ```
 
-   No escribas la URL real en el repositorio ni en archivos versionados.
+   Vuelve a ejecutar `npx prisma db seed` después de desplegar cambios de contenido para cargar las unidades nuevas. No escribas la URL real en el repositorio ni en archivos versionados.
 
 ## Limitaciones conocidas
 
