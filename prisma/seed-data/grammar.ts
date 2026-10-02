@@ -306,7 +306,7 @@ const topics = [
     phrases: [
       { german: "Der Zug ist schneller als der Bus.", spanish: "El tren es más rápido que el autobús.", blankWord: "schneller", explanation: "El comparativo schneller se combina con als para marcar diferencia." },
       { german: "Mia ist so groß wie ihre Schwester.", spanish: "Mia es tan alta como su hermana.", blankWord: "groß", explanation: "so … wie expresa igualdad entre Mia y su hermana." },
-      { german: "Heute läuft er am schnellsten.", spanish: "Hoy es cuando corre más rápido.", blankWord: "schnellsten", explanation: "am schnellsten es la forma superlativa adverbial." },
+      { german: "Heute läuft er am schnellsten.", spanish: "Hoy es él quien corre más rápido.", blankWord: "schnellsten", explanation: "am schnellsten es la forma superlativa adverbial." },
       { german: "Mein Bruder spielt besser als ich.", spanish: "Mi hermano juega mejor que yo.", blankWord: "Bruder", explanation: "besser es el comparativo irregular de gut." },
       { german: "Am liebsten esse ich Gemüse.", spanish: "Lo que más me gusta comer son verduras.", blankWord: "Gemüse", explanation: "am liebsten expresa la preferencia máxima." },
       { german: "Ich trinke lieber Tee als Kaffee.", spanish: "Prefiero tomar té antes que café.", blankWord: "lieber", explanation: "lieber compara preferencias y significa «con más gusto»." },
@@ -388,7 +388,7 @@ const topics = [
     phrases: [
       { german: "Als Kind war ich sehr schüchtern.", spanish: "De niño era muy tímido.", blankWord: "schüchtern", explanation: "war es el Präteritum irregular de sein." },
       { german: "Sie hatte gestern keine Zeit.", spanish: "Ayer no tuvo tiempo.", blankWord: "gestern", explanation: "hatte es el Präteritum de haben." },
-      { german: "Wir lernten in der Schule Französisch.", spanish: "Aprendíamos francés en el colegio.", blankWord: "Französisch", explanation: "El verbo regular lernen forma lernte y lern-ten en Präteritum." },
+      { german: "Wir lernten in der Schule Französisch.", spanish: "Aprendíamos francés en el colegio.", blankWord: "Französisch", explanation: "lernen es regular en Präteritum: ich lernte, wir lernten." },
       { german: "Letzte Woche konnte mein Bruder nicht kommen.", spanish: "La semana pasada mi hermano no pudo venir.", blankWord: "Woche", explanation: "konnte es el Präteritum modal de können; kommen queda en infinitivo al final." },
       { german: "Der Zug fuhr um acht Uhr ab.", spanish: "El tren salió a las ocho.", blankWord: "fuhr", explanation: "fuhr es el Präteritum irregular de fahren." },
       { german: "Ich musste lange auf den Arzt warten.", spanish: "Tuve que esperar mucho al médico.", blankWord: "lange", explanation: "musste es el pasado de müssen y warten permanece en infinitivo." },
@@ -472,7 +472,7 @@ const topics = [
       { german: "Der Brief wird von der Ärztin geschrieben.", spanish: "La carta es escrita por la médica.", blankWord: "Ärztin", explanation: "El agente se introduce con von más dativo." },
       { german: "In dieser Fabrik werden Fahrräder hergestellt.", spanish: "En esta fábrica se fabrican bicicletas.", blankWord: "Fabrik", explanation: "El sujeto plural Fahrräder requiere werden." },
       { german: "Das alte Rathaus wurde im Jahr 1900 eröffnet.", spanish: "El antiguo ayuntamiento se inauguró en 1900.", blankWord: "eröffnet", explanation: "wurde eröffnet forma el pasivo en pasado." },
-      { german: "Die Brücke wird von vielen Touristen fotografiert.", spanish: "Muchos turistas fotografían el puente.", blankWord: "Touristen", explanation: "von vielen Touristen expresa el agente en dativo plural." },
+      { german: "Die Brücke wird von vielen Touristen fotografiert.", spanish: "El puente es fotografiado por muchos turistas.", spanishAlt: ["Muchos turistas fotografían el puente."], blankWord: "Touristen", explanation: "von vielen Touristen expresa el agente en dativo plural." },
     ] satisfies Phrase[],
   },
   {
@@ -602,7 +602,7 @@ const topics = [
 - Con verbos modales, se usan dos infinitivos en lugar del participio.
 - La condición suele aparecer con wenn y el verbo al final.`,
     phrases: [
-      { german: "Ich hätte den Zug früher genommen.", spanish: "Habría cogido el tren anterior.", blankWord: "Zug", explanation: "hätte genommen expresa una acción pasada hipotética." },
+      { german: "Ich hätte einen früheren Zug genommen.", spanish: "Habría cogido un tren anterior.", blankWord: "Zug", explanation: "hätte genommen expresa una acción pasada hipotética." },
       { german: "Sie wäre gern länger geblieben.", spanish: "A ella le habría gustado quedarse más tiempo.", blankWord: "länger", explanation: "bleiben forma el pasado hipotético con wäre." },
       { german: "Wenn er früher losgefahren wäre, hätte er den Bus noch erwischt.", spanish: "Si hubiera salido antes, habría cogido el autobús.", blankWord: "erwischt", explanation: "La condición y el resultado usan el Konjunktiv II pasado." },
       { german: "Mit mehr Zeit hätte ich das Museum besucht.", spanish: "Con más tiempo, habría visitado el museo.", blankWord: "Museum", explanation: "hätte besucht presenta un resultado que no llegó a ocurrir." },
@@ -658,7 +658,7 @@ const topics = [
     phrases: [
       { german: "Als ich nach Berlin zog, kannte ich niemanden.", spanish: "Cuando me mudé a Berlín, no conocía a nadie.", blankWord: "niemanden", explanation: "als introduce un acontecimiento único y terminado en el pasado." },
       { german: "Wenn sie frei hat, besucht sie ihre Großeltern.", spanish: "Cuando tiene tiempo libre, visita a sus abuelos.", blankWord: "Großeltern", explanation: "wenn describe una situación repetida." },
-      { german: "Nachdem der Zug abgefahren war, bemerkte ich mein Ticket.", spanish: "Después de que salió el tren, me di cuenta de que tenía el billete.", blankWord: "Ticket", explanation: "Nachdem indica que el tren salió antes de que me diera cuenta." },
+      { german: "Nachdem der Zug abgefahren war, bemerkte ich meinen Fehler.", spanish: "Después de que saliera el tren, me di cuenta de mi error.", spanishAlt: ["Cuando el tren ya había salido, me di cuenta de mi error."], blankWord: "Fehler", explanation: "nachdem indica que el tren salió antes de que me diera cuenta del error." },
       { german: "Bevor du das Haus verlässt, schließe bitte die Fenster.", spanish: "Antes de salir de casa, cierra las ventanas, por favor.", blankWord: "Haus", explanation: "La subordinada con bevor va primero y el verbo principal aparece tras ella." },
       { german: "Während die Kinder draußen spielen, bereitet er das Abendessen vor.", spanish: "Mientras los niños juegan fuera, él prepara la cena.", blankWord: "Abendessen", explanation: "während expresa acciones simultáneas y el prefijo vor queda al final." },
       { german: "Sobald sie die Nachricht erhält, ruft sie uns an.", spanish: "En cuanto reciba el mensaje, nos llamará.", blankWord: "Nachricht", explanation: "sobald indica que la llamada ocurre inmediatamente después." },
@@ -732,7 +732,7 @@ const topics = [
 | Infinitivo | Konjunktiv I, er/sie | Ejemplo |
 | sein, haben | sei, habe | Er sagt, er sei müde. |
 | kommen | komme | Sie erklärt, sie komme später. |
-| Formen iguales al indicativo | Sustitución por Konjunktiv II | Sie sagen, sie hätten Zeit. |
+| Formas iguales al indicativo (sie haben) | Sustitución por Konjunktiv II | Sie sagen, sie hätten Zeit. |
 
 - El verbo de la declaración indirecta ocupa el final si la frase se introduce con dass.
 - Si Konjunktiv I coincide con el indicativo, a menudo se usa Konjunktiv II para mayor claridad.`,
@@ -740,7 +740,7 @@ const topics = [
       { german: "Er sagt, er sei heute krank.", spanish: "Dice que hoy está enfermo.", blankWord: "krank", explanation: "sei es el Konjunktiv I de sein en discurso indirecto." },
       { german: "Die Sprecherin erklärt, sie habe keine Fragen.", spanish: "La portavoz explica que no tiene preguntas.", blankWord: "Sprecherin", explanation: "habe es el Konjunktiv I de haben." },
       { german: "Der Zeuge berichtet, der Fahrer komme aus Dresden.", spanish: "El testigo informa de que el conductor es de Dresde.", blankWord: "Zeuge", explanation: "komme reproduce indirectamente lo que dice el testigo." },
-      { german: "Die Ministerin betont, die Gespräche begännen bald.", spanish: "La ministra subraya que las conversaciones empezarían pronto.", blankWord: "Gespräche", explanation: "begännen sustituye al Konjunktiv I plural porque coincide con el indicativo." },
+      { german: "Die Ministerin betont, die Gespräche würden bald beginnen.", spanish: "La ministra subraya que las conversaciones empezarán pronto.", blankWord: "Gespräche", explanation: "würden beginnen sustituye al Konjunktiv I plural (beginnen), que coincide con el indicativo." },
       { german: "Sie sagen, sie hätten den Vertrag gelesen.", spanish: "Dicen que han leído el contrato.", blankWord: "Vertrag", explanation: "hätten sustituye al Konjunktiv I, que coincidiría con el indicativo." },
       { german: "Laut der Zeitung sei das Museum wieder geöffnet.", spanish: "Según el periódico, el museo vuelve a estar abierto.", blankWord: "Zeitung", explanation: "sei transmite una información atribuida a una fuente." },
     ] satisfies Phrase[],
@@ -766,7 +766,7 @@ const topics = [
 - El artículo femenino y plural es der; el masculino y neutro suele ser des.`,
     phrases: [
       { german: "Wegen des Schnees blieb die Schule geschlossen.", spanish: "A causa de la nieve, el colegio permaneció cerrado.", blankWord: "Schnees", explanation: "wegen rige genitivo: des Schnees." },
-      { german: "Trotz der Verspätung erreichte sie den Anschluss.", spanish: "A pesar del retraso, llegó al enlace.", blankWord: "Verspätung", explanation: "trotz se construye con genitivo: der Verspätung." },
+      { german: "Trotz der Verspätung erreichte sie den Anschluss.", spanish: "A pesar del retraso, llegó a tiempo al enlace.", blankWord: "Verspätung", explanation: "trotz se construye con genitivo: der Verspätung." },
       { german: "Während der Sitzung blieb das Handy ausgeschaltet.", spanish: "Durante la reunión, el móvil permaneció apagado.", blankWord: "Sitzung", explanation: "während introduce el genitivo femenino der Sitzung." },
       { german: "Aufgrund eines technischen Problems fiel der Zug aus.", spanish: "Debido a un problema técnico, se canceló el tren.", blankWord: "Zug", explanation: "Aufgrund eines technischen Problems rige genitivo neutro." },
       { german: "Innerhalb eines Monats muss der Antrag eingehen.", spanish: "La solicitud debe recibirse en el plazo de un mes.", blankWord: "Antrag", explanation: "innerhalb rige genitivo: eines Monats." },
