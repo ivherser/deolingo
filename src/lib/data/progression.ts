@@ -12,6 +12,17 @@ const orderedLessonsQuery = (cefrLevel: string) => ({
   select: { id: true },
 });
 
+export async function getSelectedLevel(userId: string): Promise<CefrLevel> {
+  const progress = await prisma.userProgress.findUnique({
+    where: { userId },
+    select: { selectedLevel: true },
+  });
+  if (!progress) {
+    throw new MissingRecordError();
+  }
+  return cefrLevelSchema.parse(progress.selectedLevel);
+}
+
 async function lessonUnlockState(
   client: Prisma.TransactionClient | typeof prisma,
   userId: string,
