@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { z } from "zod";
+import { CEFR_LEVELS, CEFR_LEVEL_LABELS, cefrLevelSchema, type CefrLevel } from "@/lib/levels";
 
 const topicListSchema = z.array(
   z.object({
@@ -11,9 +12,13 @@ const topicListSchema = z.array(
     title: z.string(),
     summary: z.string(),
     order: z.number().int(),
-    cefrLevel: z.string(),
+    cefrLevel: cefrLevelSchema,
   }),
 );
+const grammarResponseSchema = z.object({
+  level: cefrLevelSchema,
+  topics: topicListSchema,
+});
 
 const topicSchema = z.object({
   id: z.string(),
@@ -29,19 +34,71 @@ type GrammarTopic = z.infer<typeof topicSchema>;
 
 export function GrammarIndex() {
   const [topics, setTopics] = useState<z.infer<typeof topicListSchema>>([]);
+  const [level, setLevel] = useState<CefrLevel | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const latestRequestedLevel = useRef<CefrLevel | null>(null);
 
   useEffect(() => {
+    let active = true;
+    latestRequestedLevel.current = null;
     fetch("/api/grammar")
       .then(async (response) => {
         if (!response.ok) {
           throw new Error("No pudimos cargar los temas.");
         }
-        return topicListSchema.parse(await response.json());
+        return grammarResponseSchema.parse(await response.json());
       })
-      .then(setTopics)
-      .catch(() => setError("No pudimos cargar los temas de gramática. Inténtalo de nuevo."));
+      .then((value) => {
+        if (active && latestRequestedLevel.current === null) {
+          setLevel(value.level);
+          setTopics(value.topics);
+        }
+      })
+      .catch(() => {
+        if (active && latestRequestedLevel.current === null) {
+          setError("No pudimos cargar los temas de gramática. Inténtalo de nuevo.");
+        }
+      })
+      .finally(() => {
+        if (active && latestRequestedLevel.current === null) {
+          setLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, []);
+
+  async function handleLevelChange(nextLevel: CefrLevel) {
+    if (nextLevel === level) {
+      return;
+    }
+    latestRequestedLevel.current = nextLevel;
+    setLevel(nextLevel);
+    setTopics([]);
+    setLoading(true);
+    setError("");
+    try {
+      const response = await fetch(`/api/grammar?level=${encodeURIComponent(nextLevel)}`);
+      if (!response.ok) {
+        throw new Error("No pudimos cargar los temas.");
+      }
+      const value = grammarResponseSchema.parse(await response.json());
+      if (latestRequestedLevel.current === nextLevel) {
+        setLevel(value.level);
+        setTopics(value.topics);
+      }
+    } catch {
+      if (latestRequestedLevel.current === nextLevel) {
+        setError("No pudimos cargar los temas de gramática. Inténtalo de nuevo.");
+      }
+    } finally {
+      if (latestRequestedLevel.current === nextLevel) {
+        setLoading(false);
+      }
+    }
+  }
 
   return (
     <div>
@@ -50,16 +107,39 @@ export function GrammarIndex() {
         <h1 className="mt-1 text-3xl font-black">Gramática alemana</h1>
         <p className="mt-2 font-semibold text-[#777]">Reglas claras, ejemplos cotidianos y práctica breve.</p>
       </header>
+      <div className="mb-6 grid grid-cols-2 gap-2 sm:grid-cols-3" role="group" aria-label="Nivel de gramática">
+        {CEFR_LEVELS.map((cefrLevel) => {
+          const selected = level === cefrLevel;
+          return (
+            <button
+              key={cefrLevel}
+              type="button"
+              aria-pressed={selected}
+              onClick={() => void handleLevelChange(cefrLevel)}
+              className={`min-w-0 rounded-xl border-2 border-b-4 px-2 py-2 text-left transition ${
+                selected
+                  ? "border-[#58cc02] border-b-[#58a700] bg-[#58cc02] text-white"
+                  : "border-[#e5e5e5] border-b-[#d5d5d5] bg-white text-[#777] hover:border-[#c8e9b4]"
+              }`}
+            >
+              <span className="block text-sm font-black">{cefrLevel}</span>
+              <span className="block text-[10px] font-bold leading-4">{CEFR_LEVEL_LABELS[cefrLevel]}</span>
+            </button>
+          );
+        })}
+      </div>
       {error ? (
         <p role="alert" className="rounded-2xl bg-[#fff0f0] p-5 font-bold text-[#c43f3f]">{error}</p>
-      ) : topics.length === 0 ? (
+      ) : loading ? (
         <p role="status" className="py-12 text-center font-bold text-[#999]">Cargando temas…</p>
+      ) : topics.length === 0 ? (
+        <p role="status" className="py-12 text-center font-bold text-[#999]">Aún no hay temas para este nivel.</p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
           {topics.map((topic, index) => (
             <Link key={topic.id} href={`/grammar/${topic.slug}`} className="group rounded-3xl border-2 border-[#e5e5e5] bg-white p-5 transition hover:-translate-y-1 hover:border-[#bce99d] hover:shadow-[0_4px_0_#dcebd3]">
               <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#f2ffea] text-xl font-black text-[#58a700]">{["A", "◉", "↗", "V2", "⌁", "✦"][index]}</span>
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#f2ffea] text-xl font-black text-[#58a700]">{index + 1}</span>
                 <span className="rounded-full bg-[#f4f4f4] px-3 py-1 text-xs font-black text-[#888]">{topic.cefrLevel}</span>
               </div>
               <h2 className="mt-4 text-xl font-black group-hover:text-[#58a700]">{topic.title}</h2>

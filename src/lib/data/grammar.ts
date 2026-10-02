@@ -1,8 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { parseExerciseData, type ExerciseType } from "@/lib/exercises/types";
+import type { CefrLevel } from "@/lib/levels";
 
-export async function getGrammarTopics() {
+export async function getGrammarTopics(level: CefrLevel) {
   return prisma.grammarTopic.findMany({
+    where: { cefrLevel: level },
     orderBy: { order: "asc" },
     select: { id: true, slug: true, title: true, summary: true, order: true, cefrLevel: true },
   });

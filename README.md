@@ -7,7 +7,7 @@ Deolingo es una aplicación web para que hispanohablantes aprendan alemán desde
 - Ruta de 15 unidades y 45 lecciones organizadas por nivel, con desbloqueo secuencial.
 - Ejercicios de traducción en ambas direcciones, opción múltiple, orden de palabras, completar frases y asociación.
 - Corazones que se recuperan con el tiempo, rachas de actividad y puntos de experiencia (XP).
-- Seis temas de gramática con explicaciones y práctica sin consumir corazones.
+- 28 temas de gramática repartidos de A1 a B2.2 y filtrados por nivel en la sección de Gramática, con explicaciones y práctica sin consumir corazones.
 - Vocabulario por temas, tarjetas reversibles y repaso programado.
 - Registro e inicio de sesión con correo y contraseña.
 

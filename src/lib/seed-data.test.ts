@@ -213,10 +213,19 @@ describe("seed data", () => {
     ]);
   });
 
-  it("includes six complete grammar topics with at least six exercises each", () => {
-    expect(grammarTopics).toHaveLength(6);
+  it("includes complete grammar topics for every CEFR level with unique IDs and orders", () => {
+    expect(grammarTopics).toHaveLength(28);
     const ids = allSeedIds();
+    const slugs = new Set<string>();
+    const orders = new Set<number>();
+    const topicCounts = new Map<string, number>();
     for (const topic of grammarTopics) {
+      expect(CEFR_LEVELS).toContain(topic.cefrLevel);
+      expect(slugs.has(topic.slug)).toBe(false);
+      slugs.add(topic.slug);
+      expect(orders.has(topic.order)).toBe(false);
+      orders.add(topic.order);
+      topicCounts.set(topic.cefrLevel, (topicCounts.get(topic.cefrLevel) ?? 0) + 1);
       expect(ids.has(topic.id)).toBe(false);
       ids.add(topic.id);
       expect(topic.exercises.length).toBeGreaterThanOrEqual(6);
@@ -225,6 +234,19 @@ describe("seed data", () => {
         ids.add(exercise.id);
       }
       validateExercises(topic.exercises);
+    }
+    for (const level of CEFR_LEVELS) {
+      expect(topicCounts.get(level) ?? 0).toBeGreaterThanOrEqual(4);
+    }
+    for (const [slug, order] of [
+      ["articulos", 1],
+      ["casos", 2],
+      ["conjugacion", 3],
+      ["orden-v2", 4],
+      ["preposiciones", 5],
+      ["adjetivos", 6],
+    ]) {
+      expect(grammarTopics.find((topic) => topic.slug === slug)?.order).toBe(order);
     }
   });
 
