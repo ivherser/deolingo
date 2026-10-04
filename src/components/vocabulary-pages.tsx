@@ -225,7 +225,7 @@ export function VocabularyIndex() {
           {topics.map((topic) => (
             <Link key={topic.topic} href={`/vocabulary/${encodeURIComponent(topic.topic)}${levelsQuery}`} className="flex items-center justify-between rounded-2xl border-2 border-[#e5e5e5] bg-white p-4 transition hover:border-[#a8def8] hover:bg-[#f8fdff]">
               <span>
-                <span className="block font-black">{topicLabels[topic.topic] ?? topic.topic}</span>
+                <span className="block font-black capitalize">{topicLabels[topic.topic] ?? topic.topic}</span>
                 <span className="mt-0.5 block text-sm font-semibold text-[#888]">{topic.count} palabras</span>
               </span>
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eefaff] text-lg" aria-hidden="true">{topicIcons[topic.topic] ?? "📚"}</span>
@@ -327,7 +327,7 @@ export function VocabularyTopicPage({ topic }: { topic: string }) {
       <header className="mb-5 mt-4 flex items-end justify-between gap-3">
         <div>
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#1688bb]">Tarjetas</p>
-          <h1 className="mt-1 text-3xl font-black">{topicLabels[topic] ?? topic}</h1>
+          <h1 className="mt-1 text-3xl font-black capitalize">{topicLabels[topic] ?? topic}</h1>
         </div>
         {items.length > 0 && <span className="text-sm font-extrabold text-[#999]">{index + 1} / {items.length}</span>}
       </header>
@@ -340,7 +340,7 @@ export function VocabularyTopicPage({ topic }: { topic: string }) {
       ) : (
         <>
           <button type="button" aria-label={flipped ? "Mostrar anverso" : "Mostrar traducción"} aria-pressed={flipped} onClick={() => setFlipped((value) => !value)} className="block h-[330px] w-full [perspective:1000px] sm:h-[390px]">
-              <span className={`flashcard-inner relative block h-full w-full ${flipped ? "is-flipped" : ""}`}>
+            <span className={`flashcard-inner relative block h-full w-full ${flipped ? "is-flipped" : ""}`}>
               <span className="flashcard-face absolute inset-0 flex flex-col items-center justify-center rounded-[32px] border-2 border-[#d8effb] bg-gradient-to-br from-[#f3fbff] to-white p-6 shadow-[0_7px_0_#d8effb]">
                 <span className="mb-8 rounded-full bg-white px-4 py-1.5 text-xs font-black uppercase tracking-[0.16em] text-[#1688bb] shadow-sm">Deutsch</span>
                 <span className="absolute right-6 top-6 rounded-full bg-white px-3 py-1 text-xs font-black text-[#1688bb] shadow-sm">{item.cefrLevel}</span>
