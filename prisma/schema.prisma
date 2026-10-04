@@ -114,12 +114,14 @@ model VocabularyItem {
   article    String?
   plural     String?
   topic      String
+  cefrLevel  String             @default("A1")
   exampleDe  String?
   exampleEs  String?
   reviews    VocabularyReview[]
 
   @@unique([german, topic])
   @@index([topic])
+  @@index([cefrLevel, topic])
 }
 
 model VocabularyReview {

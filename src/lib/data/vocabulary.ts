@@ -3,18 +3,34 @@ import { prisma } from "@/lib/prisma";
 import { reviewCard, type SrsState } from "@/lib/srs";
 import { updateStreak } from "@/lib/gamification";
 import { MissingRecordError } from "@/lib/data/errors";
+import type { CefrLevel } from "@/lib/levels";
 
 type VocabularyFilter = {
   topic?: string;
+  levels: CefrLevel[];
 };
 
-export async function getVocabularyTopics() {
+export async function getVocabularyTopics(levels: CefrLevel[]) {
   const grouped = await prisma.vocabularyItem.groupBy({
     by: ["topic"],
     _count: { _all: true },
+    where: { cefrLevel: { in: levels } },
     orderBy: { topic: "asc" },
   });
-  const topicOrder = ["saludos", "numeros", "familia", "comida", "casa", "ciudad", "tiempo", "ropa", "trabajo", "ocio"];
+  const topicOrder = [
+    "verbos",
+    "conectores",
+    "saludos",
+    "numeros",
+    "familia",
+    "comida",
+    "casa",
+    "ciudad",
+    "tiempo",
+    "ropa",
+    "trabajo",
+    "ocio",
+  ];
   return grouped
     .map(({ topic, _count }) => ({ topic, count: _count._all }))
     .sort((left, right) => {
@@ -29,7 +45,10 @@ export async function getVocabularyTopics() {
 
 export async function getVocabulary(filter: VocabularyFilter) {
   return prisma.vocabularyItem.findMany({
-    where: filter.topic ? { topic: filter.topic } : undefined,
+    where: {
+      cefrLevel: { in: filter.levels },
+      ...(filter.topic ? { topic: filter.topic } : {}),
+    },
     orderBy: [{ topic: "asc" }, { german: "asc" }],
     select: {
       id: true,
@@ -38,6 +57,7 @@ export async function getVocabulary(filter: VocabularyFilter) {
       article: true,
       plural: true,
       topic: true,
+      cefrLevel: true,
       exampleDe: true,
       exampleEs: true,
     },
@@ -51,15 +71,22 @@ const selectedVocabulary = {
   article: true,
   plural: true,
   topic: true,
+  cefrLevel: true,
   exampleDe: true,
   exampleEs: true,
 } satisfies Prisma.VocabularyItemSelect;
 
-export async function getReviewCards(userId: string, topic?: string) {
+export async function getReviewCards(userId: string, filter: VocabularyFilter) {
   const now = new Date();
-  const topicFilter = topic ? { vocabularyItem: { topic } } : {};
   const due = await prisma.vocabularyReview.findMany({
-    where: { userId, nextReviewAt: { lte: now }, ...topicFilter },
+    where: {
+      userId,
+      nextReviewAt: { lte: now },
+      vocabularyItem: {
+        cefrLevel: { in: filter.levels },
+        ...(filter.topic ? { topic: filter.topic } : {}),
+      },
+    },
     orderBy: { nextReviewAt: "asc" },
     take: 20,
     select: {
@@ -77,7 +104,8 @@ export async function getReviewCards(userId: string, topic?: string) {
       ? []
       : await prisma.vocabularyItem.findMany({
           where: {
-            ...(topic ? { topic } : {}),
+            cefrLevel: { in: filter.levels },
+            ...(filter.topic ? { topic: filter.topic } : {}),
             reviews: { none: { userId } },
           },
           orderBy: [{ topic: "asc" }, { german: "asc" }],
