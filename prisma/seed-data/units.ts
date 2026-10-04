@@ -1,3 +1,6 @@
+import { a2UnitDrafts } from "./units-a2";
+import { b1_1UnitDrafts } from "./units-b1-1";
+
 export type Phrase = {
   german: string;
   spanish: string;
@@ -32,7 +35,17 @@ export type SeedLesson = {
   exercises: SeedExercise[];
 };
 
-type LessonDraft = Omit<SeedLesson, "exercises"> & { phrases: Phrase[] };
+export type LessonDraft = Omit<SeedLesson, "exercises"> & { phrases: Phrase[] };
+
+export type UnitDraft = {
+  id: string;
+  order: number;
+  title: string;
+  description: string;
+  color: string;
+  cefrLevel: string;
+  lessons: LessonDraft[];
+};
 
 function hashSeed(value: string): number {
   let hash = 0x811c9dc5;
@@ -232,15 +245,7 @@ export function createExercises(lessonId: string, phrases: Phrase[]): SeedExerci
   ];
 }
 
-const lessonDrafts: Array<{
-  id: string;
-  order: number;
-  title: string;
-  description: string;
-  color: string;
-  cefrLevel: string;
-  lessons: LessonDraft[];
-}> = [
+const lessonDrafts: UnitDraft[] = [
   {
     id: "u01",
     order: 1,
@@ -1066,6 +1071,8 @@ const lessonDrafts: Array<{
       },
     ],
   },
+  ...a2UnitDrafts,
+  ...b1_1UnitDrafts,
 ];
 
 export const units = lessonDrafts.map((unit) => ({
