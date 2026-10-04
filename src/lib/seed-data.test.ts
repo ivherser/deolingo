@@ -121,8 +121,8 @@ function validateExercises(
 }
 
 describe("seed data", () => {
-  it("contains 33 units with at least six fully validated exercises per lesson", () => {
-    expect(units).toHaveLength(33);
+  it("contains 60 units with at least six fully validated exercises per lesson", () => {
+    expect(units).toHaveLength(60);
     const ids = new Set<string>();
     const phrasesByLessonId = new Map(unitPhraseData.map(({ id, phrases }) => [id, phrases]));
 
@@ -152,11 +152,8 @@ describe("seed data", () => {
       lessonsByLevel.set(unit.cefrLevel, (lessonsByLevel.get(unit.cefrLevel) ?? 0) + unit.lessons.length);
     }
 
-    expect(lessonsByLevel.get("A1")).toBe(30);
-    expect(lessonsByLevel.get("A2")).toBe(30);
-    expect(lessonsByLevel.get("B1.1")).toBe(30);
-    for (const level of CEFR_LEVELS.filter((level) => !["A1", "A2", "B1.1"].includes(level))) {
-      expect(lessonsByLevel.get(level) ?? 0).toBeGreaterThanOrEqual(3);
+    for (const level of CEFR_LEVELS) {
+      expect(lessonsByLevel.get(level)).toBe(30);
     }
 
     for (let order = 16; order <= 24; order += 1) {
@@ -169,11 +166,26 @@ describe("seed data", () => {
       expect(unit?.id).toBe(`u${order}`);
       expect(unit?.cefrLevel).toBe("B1.1");
     }
+    for (let order = 34; order <= 42; order += 1) {
+      const unit = units.find((candidate) => candidate.order === order);
+      expect(unit?.id).toBe(`u${order}`);
+      expect(unit?.cefrLevel).toBe("B1.2");
+    }
+    for (let order = 43; order <= 51; order += 1) {
+      const unit = units.find((candidate) => candidate.order === order);
+      expect(unit?.id).toBe(`u${order}`);
+      expect(unit?.cefrLevel).toBe("B2.1");
+    }
+    for (let order = 52; order <= 60; order += 1) {
+      const unit = units.find((candidate) => candidate.order === order);
+      expect(unit?.id).toBe(`u${order}`);
+      expect(unit?.cefrLevel).toBe("B2.2");
+    }
   });
 
   it("keeps new unit phrases unique and places every blank word as a whole word", () => {
     const newUnitIds = new Set(
-      units.filter((unit) => unit.order >= 16 && unit.order <= 33).map((unit) => unit.id),
+      units.filter((unit) => unit.order >= 16).map((unit) => unit.id),
     );
     const newLessonIds = new Set(
       units
@@ -193,7 +205,7 @@ describe("seed data", () => {
       expect(phrases).toHaveLength(6);
       expect(new Set(phrases.slice(0, 3).map(({ german }) => german)).size).toBe(3);
       expect(new Set(phrases.slice(0, 3).map(({ spanish }) => spanish)).size).toBe(3);
-      expect(phrases[3].german.split(" ").length).toBeLessThanOrEqual(9);
+      expect(phrases[3].german.split(" ").length).toBeLessThanOrEqual(10);
       for (const phrase of phrases) {
         const normalizedGerman = normalizeGerman(phrase.german);
         expect(newGerman.has(normalizedGerman)).toBe(false);

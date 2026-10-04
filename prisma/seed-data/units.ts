@@ -1,5 +1,8 @@
 import { a2UnitDrafts } from "./units-a2";
 import { b1_1UnitDrafts } from "./units-b1-1";
+import { b1_2UnitDrafts } from "./units-b1-2";
+import { b2_1UnitDrafts } from "./units-b2-1";
+import { b2_2UnitDrafts } from "./units-b2-2";
 
 export type Phrase = {
   german: string;
@@ -1073,6 +1076,9 @@ const lessonDrafts: UnitDraft[] = [
   },
   ...a2UnitDrafts,
   ...b1_1UnitDrafts,
+  ...b1_2UnitDrafts,
+  ...b2_1UnitDrafts,
+  ...b2_2UnitDrafts,
 ];
 
 export const units = lessonDrafts.map((unit) => ({
