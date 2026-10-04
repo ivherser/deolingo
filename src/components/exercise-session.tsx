@@ -352,7 +352,10 @@ export function ExerciseSession({
           <h1 className="mt-4 text-3xl font-black">Te has quedado sin corazones</h1>
           <p className="mt-2 font-semibold text-[#777]">Descansa un poco; recuperarás un corazón cada 30 minutos.</p>
           {nextHeartAt && <p className="mt-3 font-extrabold text-[#c43f3f]">Siguiente corazón: {new Date(nextHeartAt).toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}</p>}
-          <Link href="/" className="pressable mt-6 inline-flex rounded-xl border-[#58a700] bg-[#58cc02] px-6 py-3 font-black text-white">VOLVER AL CAMINO</Link>
+          <div className="mt-6 flex flex-col items-center gap-3">
+            <button type="button" disabled={refillingHearts} onClick={addHearts} className="pressable inline-flex rounded-xl border-[#d74242] bg-[#ff4b4b] px-6 py-3 font-black text-white disabled:opacity-60">❤️ AÑADIR 5 CORAZONES</button>
+            <Link href="/" className="pressable inline-flex rounded-xl border-[#58a700] bg-[#58cc02] px-6 py-3 font-black text-white">VOLVER AL CAMINO</Link>
+          </div>
         </section>
       </main>
     );
