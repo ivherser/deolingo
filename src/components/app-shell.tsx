@@ -12,10 +12,12 @@ type ProgressSummary = {
 };
 
 const progressSummarySchema = z.object({
-  hearts: z.number().int().min(0).max(5),
+  hearts: z.number().int().min(0),
   xp: z.number().int().nonnegative(),
   streak: z.number().int().nonnegative(),
 });
+
+const heartRefillSchema = z.object({ hearts: z.number().int().min(0) });
 
 const navigation = [
   { href: "/", label: "Aprender", icon: "🛤️" },
@@ -29,14 +31,20 @@ function Stat({
   label,
   value,
   color,
+  onClick,
+  disabled,
+  ariaLabel,
 }: {
   icon: string;
   label: string;
   value: string | number;
   color: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  ariaLabel?: string;
 }) {
-  return (
-    <div className="flex items-center gap-2 rounded-2xl border border-[#e5e5e5] bg-white px-3 py-2">
+  const content = (
+    <>
       <span aria-hidden="true" className="text-xl">
         {icon}
       </span>
@@ -46,13 +54,28 @@ function Stat({
           {value}
         </div>
       </div>
-    </div>
+    </>
+  );
+  const className = "flex items-center gap-2 rounded-2xl border border-[#e5e5e5] bg-white px-3 py-2";
+  return onClick ? (
+    <button
+      type="button"
+      aria-label={ariaLabel}
+      onClick={onClick}
+      disabled={disabled}
+      className={`${className} text-left hover:bg-[#fafafa] disabled:cursor-wait disabled:opacity-60`}
+    >
+      {content}
+    </button>
+  ) : (
+    <div className={className}>{content}</div>
   );
 }
 
 export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
   const [summary, setSummary] = useState<ProgressSummary>({ hearts: 5, xp: 0, streak: 0 });
+  const [refillingHearts, setRefillingHearts] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -68,6 +91,31 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
       active = false;
     };
   }, [pathname]);
+
+  useEffect(() => {
+    function updateHearts(event: Event) {
+      const result = heartRefillSchema.safeParse((event as CustomEvent<unknown>).detail);
+      if (result.success) {
+        setSummary((current) => ({ ...current, hearts: result.data.hearts }));
+      }
+    }
+    window.addEventListener("hearts-refilled", updateHearts);
+    return () => window.removeEventListener("hearts-refilled", updateHearts);
+  }, []);
+
+  async function addHearts() {
+    if (refillingHearts) {
+      return;
+    }
+    setRefillingHearts(true);
+    const result = await fetch("/api/progress/hearts", { method: "POST" })
+      .then(async (response) => (response.ok ? heartRefillSchema.parse(await response.json()) : null))
+      .catch(() => null);
+    if (result) {
+      setSummary((current) => ({ ...current, hearts: result.hearts }));
+    }
+    setRefillingHearts(false);
+  }
 
   const fullScreen = pathname.startsWith("/lesson/") || pathname.endsWith("/practice");
   if (fullScreen) {
@@ -116,9 +164,15 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
             <span className="rounded-xl bg-[#eefaff] px-2 py-1 font-black text-[#1688bb]" aria-label={`${summary.xp} puntos de experiencia`}>
               ⚡ {summary.xp}
             </span>
-            <span className="rounded-xl bg-[#fff1f1] px-2 py-1 font-black text-[#d93d3d]" aria-label={`${summary.hearts} corazones`}>
+            <button
+              type="button"
+              disabled={refillingHearts}
+              onClick={addHearts}
+              aria-label={`Añadir 5 corazones (tienes ${summary.hearts})`}
+              className="rounded-xl bg-[#fff1f1] px-2 py-1 font-black text-[#d93d3d] disabled:opacity-60"
+            >
               ❤️ {summary.hearts}
-            </span>
+            </button>
           </div>
         </div>
       </header>
@@ -131,7 +185,15 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
           <h2 className="mb-4 text-sm font-black uppercase tracking-widest text-[#999]">Tu progreso</h2>
           <Stat icon="🔥" label="Racha" value={`${summary.streak} días`} color="#d99b00" />
           <Stat icon="⚡" label="Experiencia" value={summary.xp} color="#1688bb" />
-          <Stat icon="❤️" label="Corazones" value={`${summary.hearts}/5`} color="#e04a4a" />
+          <Stat
+            icon="❤️"
+            label="Corazones"
+            value={summary.hearts}
+            color="#e04a4a"
+            onClick={addHearts}
+            disabled={refillingHearts}
+            ariaLabel={`Añadir 5 corazones (tienes ${summary.hearts})`}
+          />
           <div className="mt-6 rounded-2xl bg-[#f5fff0] p-4">
             <p className="text-sm font-extrabold text-[#497c25]">¡Un poquito cada día!</p>
             <p className="mt-1 text-sm leading-5 text-[#777]">Cinco minutos bastan para avanzar.</p>

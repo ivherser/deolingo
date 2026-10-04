@@ -187,7 +187,10 @@ export function createExercises(lessonId: string, phrases: Phrase[]): SeedExerci
       order: 3,
       type: "MULTIPLE_CHOICE",
       prompt: "Elige la traducción correcta.",
-      data: { options: multipleChoicePhrases.map((phrase) => phrase.spanish) },
+      data: {
+        sourceText: multipleChoice.german,
+        options: multipleChoicePhrases.map((phrase) => phrase.spanish),
+      },
       answer: { correctIndex: multipleChoicePhrases.indexOf(multipleChoice) },
       explanation: multipleChoice.explanation,
     },
@@ -1077,3 +1080,7 @@ export const units = lessonDrafts.map((unit) => ({
     exercises: createExercises(lesson.id, phrases),
   })),
 }));
+
+export const unitPhraseData = lessonDrafts.flatMap((unit) =>
+  unit.lessons.map(({ id, phrases }) => ({ id, phrases })),
+);

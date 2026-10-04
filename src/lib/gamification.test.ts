@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   computeLessonXp,
+  HEART_REFILL_AMOUNT,
   HEART_REGEN_MINUTES,
   isLessonUnlocked,
   MAX_HEARTS,
@@ -35,6 +36,13 @@ describe("heart regeneration", () => {
       heartsUpdatedAt: now,
     });
     expect(nextHeartAt(5, now)).toBeNull();
+  });
+
+  it("does not regenerate heart counts above five", () => {
+    const updatedAt = new Date(now.getTime() - 60 * 60_000);
+    expect(regenerateHearts(7, updatedAt, now)).toEqual({ hearts: 7, heartsUpdatedAt: now });
+    expect(nextHeartAt(7, updatedAt)).toBeNull();
+    expect(HEART_REFILL_AMOUNT).toBe(5);
   });
 
   it("reports the next heart time", () => {

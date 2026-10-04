@@ -21,6 +21,7 @@ export const exerciseDataSchemas = {
     hint: z.string().optional(),
   }),
   MULTIPLE_CHOICE: z.object({
+    sourceText: z.string().min(1).optional(),
     options: z.array(z.string().min(1)).min(2),
   }),
   WORD_ORDER: z.object({

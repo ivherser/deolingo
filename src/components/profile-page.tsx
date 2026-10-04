@@ -79,7 +79,7 @@ export function ProfilePage({ name, email }: { name: string; email: string }) {
             <ProfileStat icon="⚡" label="Experiencia total" value={`${progress.xp} XP`} color="#1688bb" />
             <ProfileStat icon="🔥" label="Racha actual" value={`${progress.streak} días`} color="#d99b00" />
             <ProfileStat icon="🏆" label="Racha máxima" value={`${progress.longestStreak} días`} color="#b58b00" />
-            <ProfileStat icon="❤️" label="Corazones" value={`${progress.hearts}/5`} color="#e14f68" />
+            <ProfileStat icon="❤️" label="Corazones" value={progress.hearts} color="#e14f68" />
             <ProfileStat icon="📚" label="Lecciones" value={`${progress.completedLessons}/${progress.totalLessons}`} color="#58a700" />
             <ProfileStat icon="🧠" label="Palabras" value={progress.learnedWords} color="#8b62bd" />
           </section>

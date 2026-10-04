@@ -38,6 +38,7 @@ La ruta ofrece A1 (Principiante), A2 (Básico), B1.1 (Intermedio I), B1.2 (Inter
    - `DATABASE_URL`: URL de PostgreSQL, por ejemplo `postgresql://usuario:contraseña@localhost:5432/deolingo?schema=public`.
    - `NEXTAUTH_SECRET`: secreto aleatorio para firmar sesiones. Genera uno con `openssl rand -base64 32`.
    - `NEXTAUTH_URL`: URL base de la aplicación; en local, `http://localhost:3000`.
+   - `ADMIN_EMAILS`: lista opcional de correos separados por comas con acceso a `/admin`.
 
    No compartas ni agregues `.env` al control de versiones.
 

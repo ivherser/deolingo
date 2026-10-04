@@ -52,18 +52,18 @@ const feedbackSchema = z.object({
   correct: z.boolean(),
   correctAnswer: z.string(),
   explanation: z.string().nullable(),
-  hearts: z.number().int().min(0).max(5),
+  hearts: z.number().int().min(0),
 });
 const completionSchema = z.object({
   xpEarned: z.number().int(),
   progress: z.object({
     xp: z.number().int(),
     streak: z.number().int(),
-    hearts: z.number().int().min(0).max(5),
+    hearts: z.number().int().min(0),
   }),
 });
 const heartProgressSchema = z.object({
-  hearts: z.number().int().min(0).max(5).optional(),
+  hearts: z.number().int().min(0).optional(),
   nextHeartAt: z.string().nullable().optional(),
 });
 
@@ -94,10 +94,31 @@ export function ExerciseSession({
   const [checks, setChecks] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [hearts, setHearts] = useState(5);
+  const [refillingHearts, setRefillingHearts] = useState(false);
   const [nextHeartAt, setNextHeartAt] = useState<string | null>(null);
   const [outOfHearts, setOutOfHearts] = useState(false);
   const [completion, setCompletion] = useState<Completion | null>(null);
   const [finished, setFinished] = useState(false);
+
+  async function addHearts() {
+    if (mode !== "lesson" || refillingHearts) {
+      return;
+    }
+    setRefillingHearts(true);
+    const progress = await fetch("/api/progress/hearts", { method: "POST" })
+      .then(async (response) => (response.ok ? heartProgressSchema.parse(await response.json()) : null))
+      .catch(() => null);
+    if (progress?.hearts !== undefined) {
+      setHearts(progress.hearts);
+      setNextHeartAt(progress.nextHeartAt ?? null);
+      const updatedHearts = progress.hearts;
+      setFeedback((current) => (current ? { ...current, hearts: updatedHearts } : current));
+      setOutOfHearts(false);
+      setPageError("");
+      window.dispatchEvent(new CustomEvent("hearts-refilled", { detail: { hearts: updatedHearts } }));
+    }
+    setRefillingHearts(false);
+  }
 
   useEffect(() => {
     let active = true;
@@ -380,7 +401,17 @@ export function ExerciseSession({
         <div className="h-3 flex-1 overflow-hidden rounded-full bg-[#e5e5e5]" role="progressbar" aria-label="Progreso del ejercicio" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
           <div className="h-full rounded-full bg-[#58cc02] transition-all duration-300" style={{ width: `${progress}%` }} />
         </div>
-        {mode === "lesson" && <span className="whitespace-nowrap font-black text-[#d93d3d]" aria-label={`${hearts} corazones`}>❤️ {hearts}</span>}
+        {mode === "lesson" && (
+          <button
+            type="button"
+            disabled={refillingHearts}
+            onClick={addHearts}
+            aria-label={`Añadir 5 corazones (tienes ${hearts})`}
+            className="whitespace-nowrap rounded-xl px-2 py-1 font-black text-[#d93d3d] disabled:opacity-60"
+          >
+            ❤️ {hearts}
+          </button>
+        )}
       </header>
 
       <section className="mx-auto max-w-2xl px-4 pt-7 sm:px-7">
@@ -481,6 +512,7 @@ function renderExercise({
     const data = exerciseDataSchemas.MULTIPLE_CHOICE.parse(exercise.data);
     return (
       <div className="space-y-3">
+        {data.sourceText && <div className="mb-4 rounded-2xl bg-[#f5f5f5] p-5 text-xl font-extrabold">{data.sourceText}</div>}
         {data.options.map((option, index) => (
           <button key={`${index}-${option}`} type="button" disabled={disabled} onClick={() => setChoice(index)} aria-pressed={choice === index} className={`flex w-full items-center gap-4 rounded-2xl border-2 p-4 text-left font-extrabold transition ${choice === index ? "border-[#58cc02] bg-[#f4ffed] text-[#4a861e]" : "border-[#e5e5e5] hover:bg-[#fafafa]"}`}>
             <span className={`flex h-8 w-8 items-center justify-center rounded-lg border-2 text-sm ${choice === index ? "border-[#58cc02] bg-[#58cc02] text-white" : "border-[#ddd] text-[#999]"}`}>{index + 1}</span>

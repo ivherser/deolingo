@@ -2,7 +2,14 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { gradeAnswer } from "@/lib/exercises/grading";
 import { parseExerciseData, type ExerciseType } from "@/lib/exercises/types";
-import { computeLessonXp, isLessonUnlocked, nextHeartAt, regenerateHearts, updateStreak } from "@/lib/gamification";
+import {
+  computeLessonXp,
+  HEART_REFILL_AMOUNT,
+  isLessonUnlocked,
+  nextHeartAt,
+  regenerateHearts,
+  updateStreak,
+} from "@/lib/gamification";
 import { LockedLessonError, MissingRecordError, NoHeartsError } from "@/lib/data/errors";
 import { cefrLevelSchema, type CefrLevel } from "@/lib/levels";
 
@@ -305,6 +312,26 @@ export async function getProgressForUser(userId: string) {
       completedLessons,
       totalLessons,
       learnedWords,
+    };
+  });
+}
+
+export async function refillHeartsForUser(userId: string) {
+  const now = new Date();
+  return prisma.$transaction(async (transaction) => {
+    const progress = await lockUserProgress(transaction, userId);
+    if (!progress) {
+      throw new MissingRecordError();
+    }
+    const regenerated = regenerateHearts(progress.hearts, progress.heartsUpdatedAt, now);
+    const updated = await transaction.userProgress.update({
+      where: { userId },
+      data: { hearts: regenerated.hearts + HEART_REFILL_AMOUNT, heartsUpdatedAt: now },
+      select: { hearts: true, heartsUpdatedAt: true },
+    });
+    return {
+      hearts: updated.hearts,
+      nextHeartAt: nextHeartAt(updated.hearts, updated.heartsUpdatedAt),
     };
   });
 }

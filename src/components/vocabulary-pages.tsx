@@ -112,6 +112,9 @@ export function VocabularyTopicPage({ topic }: { topic: string }) {
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
+  const [reviewError, setReviewError] = useState("");
 
   useEffect(() => {
     fetch(`/api/vocabulary?topic=${encodeURIComponent(topic)}`)
@@ -130,15 +133,30 @@ export function VocabularyTopicPage({ topic }: { topic: string }) {
     setFlipped(false);
   }
 
-  function shuffle() {
-    if (items.length < 2) {
+  async function rate(quality: number) {
+    const item = items[index];
+    if (!item || saving) {
       return;
     }
-    const current = items[index];
-    const otherItems = items.filter((item) => item.id !== current?.id);
-    const next = otherItems[Math.floor(Math.random() * otherItems.length)];
-    const nextIndex = items.findIndex((item) => item.id === next?.id);
-    goTo(nextIndex);
+    setSaving(true);
+    setSaveMessage("");
+    setReviewError("");
+    try {
+      const response = await fetch("/api/vocabulary/review", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ vocabularyItemId: item.id, quality }),
+      });
+      if (!response.ok) {
+        throw new Error();
+      }
+      setSaveMessage("Guardado");
+      goTo(index + 1);
+    } catch {
+      setReviewError("No se pudo guardar la valoración. Inténtalo de nuevo.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   const item = items[index];
@@ -178,11 +196,14 @@ export function VocabularyTopicPage({ topic }: { topic: string }) {
             </span>
           </button>
           <p className="mt-3 text-center text-sm font-bold text-[#999]">Haz clic en la tarjeta para girarla</p>
-          <div className="mt-5 flex items-center justify-between gap-3">
-            <button type="button" onClick={() => goTo(index - 1)} className="rounded-xl border-2 border-[#e5e5e5] px-4 py-3 font-black text-[#666] hover:bg-[#f7f7f7]">← Anterior</button>
-            <button type="button" onClick={shuffle} className="rounded-xl border-2 border-[#e5e5e5] px-4 py-3 font-black text-[#1688bb] hover:bg-[#f3fbff]">Mezclar</button>
-            <button type="button" onClick={() => goTo(index + 1)} className="rounded-xl border-2 border-[#e5e5e5] px-4 py-3 font-black text-[#666] hover:bg-[#f7f7f7]">Siguiente →</button>
+          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <button type="button" disabled={saving} onClick={() => { setSaveMessage(""); setReviewError(""); goTo(index - 1); }} className="rounded-xl border-2 border-[#e5e5e5] px-4 py-3 font-black text-[#666] hover:bg-[#f7f7f7] disabled:opacity-50">← Atrás</button>
+            <button type="button" disabled={saving} onClick={() => void rate(3)} className="rounded-xl border-2 border-[#f1d5a4] px-4 py-3 font-black text-[#a56800] hover:bg-[#fff8eb] disabled:opacity-50">Difícil</button>
+            <button type="button" disabled={saving} onClick={() => void rate(5)} className="rounded-xl border-2 border-[#d8efca] px-4 py-3 font-black text-[#58a700] hover:bg-[#f5fff0] disabled:opacity-50">Fácil</button>
+            <button type="button" disabled={saving} onClick={() => { setSaveMessage(""); setReviewError(""); goTo(index + 1); }} className="rounded-xl border-2 border-[#e5e5e5] px-4 py-3 font-black text-[#666] hover:bg-[#f7f7f7] disabled:opacity-50">Adelante →</button>
           </div>
+          {saveMessage && <p role="status" className="mt-3 text-center text-sm font-bold text-[#58a700]">{saveMessage}</p>}
+          {reviewError && <p role="alert" className="mt-3 text-center text-sm font-bold text-[#c43f3f]">{reviewError}</p>}
         </>
       )}
     </div>

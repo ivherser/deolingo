@@ -1,10 +1,11 @@
 import { z } from "zod";
 
 export const MAX_HEARTS = 5;
+export const HEART_REFILL_AMOUNT = 5;
 export const HEART_REGEN_MINUTES = 30;
 const heartIntervalMs = HEART_REGEN_MINUTES * 60 * 1000;
 
-const heartsSchema = z.number().int().min(0).max(MAX_HEARTS);
+const heartsSchema = z.number().int().min(0);
 const dateSchema = z.date();
 
 export function regenerateHearts(
@@ -15,8 +16,8 @@ export function regenerateHearts(
   const currentHearts = heartsSchema.parse(hearts);
   const updatedAt = dateSchema.parse(heartsUpdatedAt);
   const currentTime = dateSchema.parse(now);
-  if (currentHearts === MAX_HEARTS) {
-    return { hearts: MAX_HEARTS, heartsUpdatedAt: currentTime };
+  if (currentHearts >= MAX_HEARTS) {
+    return { hearts: currentHearts, heartsUpdatedAt: currentTime };
   }
   const intervals = Math.floor((currentTime.getTime() - updatedAt.getTime()) / heartIntervalMs);
   if (intervals <= 0) {
@@ -36,7 +37,7 @@ export function regenerateHearts(
 export function nextHeartAt(hearts: number, heartsUpdatedAt: Date): Date | null {
   const currentHearts = heartsSchema.parse(hearts);
   const updatedAt = dateSchema.parse(heartsUpdatedAt);
-  return currentHearts === MAX_HEARTS ? null : new Date(updatedAt.getTime() + heartIntervalMs);
+  return currentHearts >= MAX_HEARTS ? null : new Date(updatedAt.getTime() + heartIntervalMs);
 }
 
 export function updateStreak(
