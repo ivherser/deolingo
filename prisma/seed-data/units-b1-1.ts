@@ -95,7 +95,7 @@ export const b1_1UnitDrafts: UnitDraft[] = [
       phrase("Die Koffer werden am Schalter kontrolliert.", "Las maletas se controlan en el mostrador.", "Koffer", "La pasiva en presente se forma con werden y el participio kontrolliert.", ["En el mostrador se revisan las maletas."]),
       phrase("Das Zimmer wurde gestern gereinigt.", "La habitación se limpió ayer.", "Zimmer", "La pasiva en Präteritum usa wurde y el participio gereinigt.", ["Ayer fue limpiada la habitación."]),
       phrase("Die Tickets werden per E-Mail verschickt.", "Los billetes se envían por correo electrónico.", "Tickets", "Con sujeto plural, la pasiva en presente usa werden.", ["Los billetes se mandan por correo electrónico."]),
-      phrase("Der Bus wird von einer Fahrerin gelenkt.", "El autobús lo conduce una conductora.", "Fahrerin", "von introduce a quien realiza la acción en una pasiva.", ["Una conductora conduce el autobús."]),
+      phrase("Der Bus wird von einer Fahrerin gefahren.", "El autobús lo conduce una conductora.", "Fahrerin", "von introduce a quien realiza la acción en una pasiva.", ["Una conductora conduce el autobús."]),
       phrase("Die Brücke wurde wegen des Wetters gesperrt.", "El puente se cerró por el tiempo.", "Brücke", "wurde marca la pasiva en pasado y wegen expresa la causa.", ["El puente fue cerrado debido al tiempo."]),
       phrase("Das Museum wird im Sommer renoviert.", "El museo se reforma en verano.", "Museum", "La pasiva en presente usa wird y el participio renoviert.", ["El museo será reformado en verano."]),
     ]),
@@ -118,7 +118,7 @@ export const b1_1UnitDrafts: UnitDraft[] = [
       phrase("Um gesund zu bleiben, geht sie oft spazieren.", "Para mantenerse sana, ella sale a pasear a menudo.", "gesund", "um ... zu expresa finalidad y el infinitivo principal es zu bleiben.", ["Para conservar la salud, sale a caminar a menudo."]),
     ]),
     lesson("u27-l3", 3, "Tratamientos y preocupaciones", "Usa verbos con preposición para hablar de la salud.", [
-      phrase("Ich beschwere mich über starke Kopfschmerzen.", "Me quejo de un dolor de cabeza fuerte.", "beschwere", "sich beschweren über rige acusativo: über starke Kopfschmerzen.", ["Me quejo de que me duele mucho la cabeza."]),
+      phrase("Ich klage über starke Kopfschmerzen.", "Me quejo de un dolor de cabeza fuerte.", "klage", "klagen über rige acusativo: über starke Kopfschmerzen.", ["Me quejo de que me duele mucho la cabeza."]),
       phrase("Sie wartet auf die Untersuchung.", "Ella espera la exploración.", "Untersuchung", "warten auf introduce aquello que se espera.", ["Está esperando la revisión."]),
       phrase("Wir interessieren uns für neue Therapien.", "Nos interesan las terapias nuevas.", "interessieren", "sich interessieren für se usa para expresar interés.", ["Estamos interesados en nuevos tratamientos."]),
       phrase("Er denkt an seine Gesundheit.", "Él piensa en su salud.", "denkt", "denken an rige acusativo: an seine Gesundheit.", ["Se preocupa por su salud."]),
@@ -224,7 +224,7 @@ export const b1_1UnitDrafts: UnitDraft[] = [
     lesson("u31-l3", 3, "Recuerdos de clase", "Combina Präteritum y subordinadas al contar experiencias.", [
       phrase("Früher lernte ich jeden Abend in der Bibliothek.", "Antes estudiaba cada tarde en la biblioteca.", "Früher", "lernte es el Präteritum regular de lernen.", ["Antes estudié todas las tardes en la biblioteca."]),
       phrase("Der Lehrer erklärte, warum die Lösung falsch war.", "El profesor explicó por qué la solución era incorrecta.", "Lehrer", "war queda al final de la pregunta indirecta introducida por warum.", ["El profesor explicó por qué estaba mal la solución."]),
-      phrase("Wir wussten nicht, ob die Prüfung heute stattfand.", "No sabíamos si el examen tenía lugar hoy.", "wussten", "wussten es el Präteritum de wissen y stattfand cierra la subordinada.", ["No sabíamos si el examen era hoy."]),
+      phrase("Wir wussten nicht, ob die Prüfung heute stattfindet.", "No sabíamos si el examen era hoy.", "wussten", "wussten es el Präteritum de wissen y stattfindet cierra la subordinada.", ["No sabíamos si el examen tenía lugar hoy."]),
       phrase("Obwohl ich müde war, las ich das Kapitel.", "Aunque estaba cansado, leí el capítulo.", "müde", "obwohl introduce la concesión y war va al final.", ["Aunque estaba cansada, leí el capítulo."]),
       phrase("Sie hatte keine Zeit, weil sie arbeiten musste.", "Ella no tenía tiempo porque tenía que trabajar.", "hatte", "hatte es el Präteritum de haben y musste cierra la subordinada con modal.", ["No tenía tiempo porque debía trabajar."]),
       phrase("Als der Kurs begann, waren alle Plätze besetzt.", "Cuando empezó el curso, todos los sitios estaban ocupados.", "begann", "als se usa para un acontecimiento pasado y el verbo va al final de la subordinada.", ["Al empezar el curso, todos los asientos estaban ocupados."]),

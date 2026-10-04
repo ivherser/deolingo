@@ -81,7 +81,7 @@ export const a2UnitDrafts: UnitDraft[] = [
       phrase("Der Patient soll viel Wasser trinken.", "El paciente debe beber mucha agua.", "Patient", "sollen expresa una recomendación y trinken permanece en infinitivo al final.", ["El paciente tiene que beber mucha agua."]),
       phrase("Kannst du mir den Verband bringen?", "¿Puedes traerme el vendaje?", "Verband", "bringen lleva la persona en dativo mir y el objeto en acusativo.", ["¿Me puedes traer el vendaje?"]),
       phrase("Mir tut seit gestern der Hals weh.", "Me duele la garganta desde ayer.", "gestern", "La persona que siente dolor aparece en dativo: mir.", ["Desde ayer me duele la garganta."]),
-      phrase("Die Behandlung hat gut geholfen.", "El tratamiento ha ayudado mucho.", "Behandlung", "helfen forma el Perfekt con haben y expresa que el tratamiento ha sido útil.", ["El tratamiento funcionó bien."]),
+      phrase("Die Behandlung hat sehr geholfen.", "El tratamiento ha ayudado mucho.", "Behandlung", "helfen forma el Perfekt con haben y expresa que el tratamiento ha sido útil.", ["El tratamiento funcionó bien."]),
     ]),
     lesson("u17-l2", 2, "Rutinas para cuidarse", "Practica verbos reflexivos para hablar de tu salud.", [
       phrase("Ich wasche mir vor dem Essen die Hände.", "Me lavo las manos antes de comer.", "wasche", "waschen usa el pronombre reflexivo en dativo mir cuando se menciona una parte del cuerpo.", ["Antes de comer me lavo las manos."]),
@@ -94,7 +94,7 @@ export const a2UnitDrafts: UnitDraft[] = [
     lesson("u17-l3", 3, "Comparar síntomas y hábitos", "Compara sensaciones y actividades con adjetivos y adverbios.", [
       phrase("Dieser Tee ist milder als der andere.", "Este té es más suave que el otro.", "milder", "El comparativo de mild es milder y se construye con als.", ["Este té resulta más suave que el otro."]),
       phrase("Meine Schwester schläft heute länger.", "Hoy mi hermana duerme más tiempo.", "Schwester", "länger es el comparativo de lang y modifica la duración del sueño.", ["Hoy duerme más mi hermana."]),
-      phrase("Der neue Termin ist am frühesten.", "La nueva cita es la más temprana.", "frühesten", "El superlativo adverbial se forma con am y -sten.", ["La nueva cita es la más temprana de todas."]),
+      phrase("Der neue Termin ist der früheste.", "La nueva cita es la más temprana.", "früheste", "Con artículo, el superlativo lleva -este: der früheste.", ["La nueva cita es la más temprana de todas."]),
       phrase("Ich fühle mich nach der Pause besser.", "Después del descanso me siento mejor.", "Pause", "besser es el comparativo irregular de gut.", ["Tras la pausa me encuentro mejor."]),
       phrase("Die zweite Übung ist weniger anstrengend.", "El segundo ejercicio es menos agotador.", "zweite", "weniger expresa una comparación de cantidad o intensidad menor.", ["El segundo ejercicio cansa menos."]),
       phrase("Am Wochenende läuft Paul am schnellsten.", "El fin de semana Paul es quien corre más rápido.", "schnellsten", "am schnellsten es el superlativo de schnell.", ["El fin de semana Paul corre más rápido que todos."]),
@@ -145,7 +145,7 @@ export const a2UnitDrafts: UnitDraft[] = [
     ]),
     lesson("u19-l3", 3, "Razones en la oficina", "Explica planes y decisiones con subordinadas sencillas.", [
       phrase("Ich glaube, dass der Plan funktioniert.", "Creo que el plan funciona.", "funktioniert", "Con dass, el verbo conjugado funktioniert va al final de la subordinada.", ["Creo que el plan sale bien."]),
-      phrase("Wir bleiben länger, weil die Arbeit noch dauert.", "Nos quedamos más porque el trabajo aún dura.", "dauert", "weil introduce una subordinada y dauert cierra la frase.", ["Nos quedamos más tiempo porque todavía queda trabajo."]),
+      phrase("Wir bleiben länger, weil wir noch viel Arbeit haben.", "Nos quedamos más tiempo porque aún tenemos mucho trabajo.", "Arbeit", "weil introduce una subordinada y haben cierra la frase.", ["Nos quedamos más porque todavía tenemos mucho trabajo."]),
       phrase("Wenn du Hilfe brauchst, ruf mich an.", "Si necesitas ayuda, llámame.", "brauchst", "En la subordinada con wenn, brauchst va al final; la principal empieza con el imperativo.", ["Si necesitas ayuda, avísame."]),
       phrase("Sie weiß, dass wir morgen kommen.", "Ella sabe que mañana venimos.", "weiß", "wissen se conjuga weiß con sie y la subordinada termina en kommen.", ["Sabe que venimos mañana."]),
       phrase("Er geht früher, weil er einen Termin hat.", "Se va antes porque tiene una cita.", "Termin", "weil introduce la razón y el verbo hat queda al final.", ["Se marcha antes porque tiene una cita."]),
@@ -193,7 +193,7 @@ export const a2UnitDrafts: UnitDraft[] = [
       phrase("Dieses Spiel ist weniger kompliziert.", "Este juego es menos complicado.", "kompliziert", "weniger expresa un grado menor del adjetivo.", ["Este juego resulta más sencillo."]),
       phrase("Wir fahren lieber ans Meer.", "Preferimos ir al mar.", "lieber", "lieber es el comparativo irregular de gern.", ["Preferimos viajar a la costa."]),
       phrase("Der rote Ball ist größer als der blaue.", "La pelota roja es más grande que la azul.", "größer", "größer es el comparativo de groß y lleva umlaut.", ["El balón rojo es mayor que el azul."]),
-      phrase("Am Sonntag spielt unser Team am besten.", "El domingo nuestro equipo juega mejor que todos.", "besten", "am besten es el superlativo irregular de gut.", ["El domingo nuestro equipo juega de maravilla."]),
+      phrase("Sonntags spielt unser Team am besten.", "Nuestro equipo juega mejor los domingos.", "besten", "am besten es el superlativo irregular de gut.", ["Los domingos es cuando mejor juega nuestro equipo."]),
     ]),
     lesson("u21-l3", 3, "Un fin de semana activo", "Cuenta actividades que has hecho durante el fin de semana.", [
       phrase("Wir haben gestern im See geschwommen.", "Ayer hemos nadado en el lago.", "geschwommen", "schwimmen forma el Perfekt con haben cuando se habla de la actividad.", ["Ayer nadamos en el lago."]),
@@ -251,7 +251,7 @@ export const a2UnitDrafts: UnitDraft[] = [
       phrase("Der neue Park ist größer als der alte.", "El parque nuevo es más grande que el antiguo.", "Park", "größer es el comparativo de groß y se construye con als.", ["El parque nuevo tiene más tamaño que el antiguo."]),
       phrase("Diese Straße ist am saubersten.", "Esta calle es la más limpia.", "saubersten", "am saubersten es el superlativo de sauber.", ["Esta es la calle más limpia."]),
       phrase("Wir trennen den Müll sorgfältig.", "Separamos la basura con cuidado.", "Müll", "trennen lleva el objeto directo den Müll en acusativo.", ["Clasificamos la basura con cuidado."]),
-      phrase("Ich benutze lieber den Zug als das Auto.", "Prefiero usar el tren al coche.", "benutze", "lieber expresa preferencia y als introduce la alternativa comparada.", ["Prefiero ir en tren que en coche."]),
+      phrase("Ich benutze lieber den Zug als das Auto.", "Prefiero usar el tren antes que el coche.", "benutze", "lieber expresa preferencia y als introduce la alternativa comparada.", ["Prefiero ir en tren que en coche."]),
       phrase("Die Innenstadt ist weniger ruhig als der Stadtrand.", "El centro es menos tranquilo que las afueras.", "Innenstadt", "weniger ... als expresa una comparación de inferioridad.", ["El centro tiene menos tranquilidad que las afueras."]),
       phrase("Am Wochenende ist der See am schönsten.", "El lago está más bonito el fin de semana.", "schönsten", "am schönsten es el superlativo de schön.", ["El lago está precioso durante el fin de semana."]),
     ]),
