@@ -32,6 +32,22 @@ function words(value: string): string[] {
   return value.split(" ");
 }
 
+function normalizeGerman(value: string): string {
+  return value
+    .trim()
+    .replace(/\s+/g, " ")
+    .replace(/[.!?]+$/u, "")
+    .toLocaleLowerCase();
+}
+
+function isWholeWordAt(value: string, word: string, index: number): boolean {
+  const before = index === 0 ? undefined : value[index - 1];
+  const after = value[index + word.length];
+  const isWordCharacter = (character: string | undefined) =>
+    character !== undefined && /[\p{L}\p{N}_]/u.test(character);
+  return !isWordCharacter(before) && !isWordCharacter(after);
+}
+
 function isMultisetSubset(subset: string[], full: string[]): boolean {
   const counts = new Map<string, number>();
   for (const word of full) {
@@ -105,8 +121,8 @@ function validateExercises(
 }
 
 describe("seed data", () => {
-  it("contains fifteen units with at least six fully validated exercises per lesson", () => {
-    expect(units).toHaveLength(15);
+  it("contains 33 units with at least six fully validated exercises per lesson", () => {
+    expect(units).toHaveLength(33);
     const ids = new Set<string>();
     const phrasesByLessonId = new Map(unitPhraseData.map(({ id, phrases }) => [id, phrases]));
 
@@ -123,6 +139,70 @@ describe("seed data", () => {
           ids.add(exercise.id);
         }
         validateExercises(lesson.exercises, phrasesByLessonId.get(lesson.id) ?? []);
+      }
+    }
+  });
+
+  it("contains the requested lesson counts and stable new unit orders", () => {
+    const lessonsByLevel = new Map<string, number>();
+    const orders = new Set<number>();
+    for (const unit of units) {
+      expect(orders.has(unit.order)).toBe(false);
+      orders.add(unit.order);
+      lessonsByLevel.set(unit.cefrLevel, (lessonsByLevel.get(unit.cefrLevel) ?? 0) + unit.lessons.length);
+    }
+
+    expect(lessonsByLevel.get("A1")).toBe(30);
+    expect(lessonsByLevel.get("A2")).toBe(30);
+    expect(lessonsByLevel.get("B1.1")).toBe(30);
+    for (const level of CEFR_LEVELS.filter((level) => !["A1", "A2", "B1.1"].includes(level))) {
+      expect(lessonsByLevel.get(level) ?? 0).toBeGreaterThanOrEqual(3);
+    }
+
+    for (let order = 16; order <= 24; order += 1) {
+      const unit = units.find((candidate) => candidate.order === order);
+      expect(unit?.id).toBe(`u${order}`);
+      expect(unit?.cefrLevel).toBe("A2");
+    }
+    for (let order = 25; order <= 33; order += 1) {
+      const unit = units.find((candidate) => candidate.order === order);
+      expect(unit?.id).toBe(`u${order}`);
+      expect(unit?.cefrLevel).toBe("B1.1");
+    }
+  });
+
+  it("keeps new unit phrases unique and places every blank word as a whole word", () => {
+    const newUnitIds = new Set(
+      units.filter((unit) => unit.order >= 16 && unit.order <= 33).map((unit) => unit.id),
+    );
+    const newLessonIds = new Set(
+      units
+        .filter((unit) => newUnitIds.has(unit.id))
+        .flatMap((unit) => unit.lessons.map((lesson) => lesson.id)),
+    );
+    const phrasesByLessonId = new Map(unitPhraseData.map(({ id, phrases }) => [id, phrases]));
+    const previousGerman = new Set(
+      unitPhraseData
+        .filter(({ id }) => !newLessonIds.has(id))
+        .flatMap(({ phrases }) => phrases.map(({ german }) => normalizeGerman(german))),
+    );
+    const newGerman = new Set<string>();
+
+    for (const lessonId of newLessonIds) {
+      const phrases = phrasesByLessonId.get(lessonId) ?? [];
+      expect(phrases).toHaveLength(6);
+      expect(new Set(phrases.slice(0, 3).map(({ german }) => german)).size).toBe(3);
+      expect(new Set(phrases.slice(0, 3).map(({ spanish }) => spanish)).size).toBe(3);
+      expect(phrases[3].german.split(" ").length).toBeLessThanOrEqual(9);
+      for (const phrase of phrases) {
+        const normalizedGerman = normalizeGerman(phrase.german);
+        expect(newGerman.has(normalizedGerman)).toBe(false);
+        expect(previousGerman.has(normalizedGerman)).toBe(false);
+        newGerman.add(normalizedGerman);
+
+        const firstIndex = phrase.german.indexOf(phrase.blankWord);
+        expect(firstIndex).toBeGreaterThanOrEqual(0);
+        expect(isWholeWordAt(phrase.german, phrase.blankWord, firstIndex)).toBe(true);
       }
     }
   });
