@@ -784,6 +784,8 @@ const topics = [
   phrases: Phrase[];
 }>;
 
+export const grammarPhraseData = topics.map(({ id, phrases }) => ({ id, phrases }));
+
 export const grammarTopics = topics.map(({ phrases, ...topic }) => ({
   ...topic,
   exercises: createExercises(topic.id, phrases),

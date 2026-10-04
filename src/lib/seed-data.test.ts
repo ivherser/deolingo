@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { exerciseAnswerSchemas, exerciseDataSchemas, type ExerciseType } from "@/lib/exercises/types";
 import { CEFR_LEVELS } from "@/lib/levels";
-import { grammarTopics } from "../../prisma/seed-data/grammar";
-import { createExercises, type Phrase, units } from "../../prisma/seed-data/units";
+import { grammarPhraseData, grammarTopics } from "../../prisma/seed-data/grammar";
+import { createExercises, type Phrase, unitPhraseData, units } from "../../prisma/seed-data/units";
 import { vocabulary } from "../../prisma/seed-data/vocabulary";
 
 const allExerciseTypes: ExerciseType[] = [
@@ -54,6 +54,7 @@ function validateExercises(
     answer: Record<string, unknown>;
     id: string;
   }>,
+  phrases: Phrase[],
 ) {
   for (const exercise of exercises) {
     exerciseDataSchemas[exercise.type].parse(exercise.data);
@@ -62,6 +63,9 @@ function validateExercises(
     if (exercise.type === "MULTIPLE_CHOICE") {
       const data = exerciseDataSchemas.MULTIPLE_CHOICE.parse(exercise.data);
       const answer = exerciseAnswerSchemas.MULTIPLE_CHOICE.parse(exercise.answer);
+      const correctPhrase = phrases.find((phrase) => phrase.german === data.sourceText);
+      expect(data.sourceText).toBeTruthy();
+      expect(correctPhrase?.spanish).toBe(data.options[answer.correctIndex]);
       expect(answer.correctIndex).toBeLessThan(data.options.length);
     }
 
@@ -104,6 +108,7 @@ describe("seed data", () => {
   it("contains fifteen units with at least six fully validated exercises per lesson", () => {
     expect(units).toHaveLength(15);
     const ids = new Set<string>();
+    const phrasesByLessonId = new Map(unitPhraseData.map(({ id, phrases }) => [id, phrases]));
 
     for (const unit of units) {
       expect(ids.has(unit.id)).toBe(false);
@@ -117,7 +122,7 @@ describe("seed data", () => {
           expect(ids.has(exercise.id)).toBe(false);
           ids.add(exercise.id);
         }
-        validateExercises(lesson.exercises);
+        validateExercises(lesson.exercises, phrasesByLessonId.get(lesson.id) ?? []);
       }
     }
   });
@@ -219,6 +224,7 @@ describe("seed data", () => {
     const slugs = new Set<string>();
     const orders = new Set<number>();
     const topicCounts = new Map<string, number>();
+    const phrasesByTopicId = new Map(grammarPhraseData.map(({ id, phrases }) => [id, phrases]));
     for (const topic of grammarTopics) {
       expect(CEFR_LEVELS).toContain(topic.cefrLevel);
       expect(slugs.has(topic.slug)).toBe(false);
@@ -233,7 +239,7 @@ describe("seed data", () => {
         expect(ids.has(exercise.id)).toBe(false);
         ids.add(exercise.id);
       }
-      validateExercises(topic.exercises);
+      validateExercises(topic.exercises, phrasesByTopicId.get(topic.id) ?? []);
     }
     for (const level of CEFR_LEVELS) {
       expect(topicCounts.get(level) ?? 0).toBeGreaterThanOrEqual(4);
