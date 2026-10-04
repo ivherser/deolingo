@@ -256,7 +256,7 @@ describe("seed data", () => {
     }
   });
 
-  it("includes at least 200 vocabulary items with unique IDs and topic words", () => {
+  it("includes levelled vocabulary with unique IDs and topic words", () => {
     expect(vocabulary.length).toBeGreaterThanOrEqual(200);
     const ids = allSeedIds();
     for (const topic of grammarTopics) {
@@ -266,13 +266,47 @@ describe("seed data", () => {
       }
     }
     const pairs = new Set<string>();
+    const nounTopics = [
+      "saludos",
+      "numeros",
+      "familia",
+      "comida",
+      "casa",
+      "ciudad",
+      "tiempo",
+      "ropa",
+      "trabajo",
+      "ocio",
+    ];
     for (const item of vocabulary) {
       expect(ids.has(item.id)).toBe(false);
       ids.add(item.id);
       expect(pairs.has(`${item.german}\u0000${item.topic}`)).toBe(false);
       pairs.add(`${item.german}\u0000${item.topic}`);
-      expect(["der", "die", "das"]).toContain(item.article);
-      expect(item.plural.length).toBeGreaterThan(0);
+      expect(CEFR_LEVELS).toContain(item.cefrLevel);
+      if (item.topic === "verbos" || item.topic === "conectores") {
+        expect(item.article).toBeNull();
+        expect(item.plural).toBeNull();
+        expect(item.exampleDe?.trim()).toBeTruthy();
+        expect(item.exampleEs?.trim()).toBeTruthy();
+      } else {
+        expect(nounTopics).toContain(item.topic);
+        expect(["der", "die", "das"]).toContain(item.article);
+        expect(item.plural?.length).toBeGreaterThan(0);
+      }
+    }
+    for (const level of CEFR_LEVELS) {
+      const verbCount = vocabulary.filter((item) => item.topic === "verbos" && item.cefrLevel === level).length;
+      const connectorCount = vocabulary.filter((item) => item.topic === "conectores" && item.cefrLevel === level).length;
+      expect(verbCount).toBeGreaterThanOrEqual(level === "A1" ? 20 : 15);
+      expect(connectorCount).toBeGreaterThanOrEqual(10);
+      if (level !== "A1") {
+        const nounCount = vocabulary.filter((item) => nounTopics.includes(item.topic) && item.cefrLevel === level).length;
+        expect(nounCount).toBeGreaterThanOrEqual(20);
+        for (const topic of nounTopics) {
+          expect(vocabulary.filter((item) => item.topic === topic && item.cefrLevel === level)).toHaveLength(2);
+        }
+      }
     }
   });
 });
