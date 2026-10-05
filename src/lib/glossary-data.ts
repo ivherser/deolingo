@@ -550,7 +550,7 @@ export const germanGlossary: Readonly<Record<string, string>> = {
   "hängt": "cuelga; depende (hängen)",
   "hast": "tienes (haben: tener)",
   "hat": "tiene/ha (haben: tener)",
-  "hatte": "tenía/había (haben: tener)",
+  "hatte": "tenía/había (haben)",
   "hätte": "tendría/habría (haben: tener)",
   "hatten": "teníamos/tenían (haben: tener)",
   "hätten": "tendríamos/tendrían (haben: tener)",
