@@ -107,6 +107,7 @@ export function ProfilePage({ name, email }: { name: string; email: string }) {
       )}
       <button type="button" onClick={() => signOut({ callbackUrl: "/login" })} className="mt-6 w-full rounded-xl border-2 border-[#e5e5e5] px-5 py-3 font-black text-[#777] hover:border-[#ffbcbc] hover:text-[#c43f3f] sm:w-auto">CERRAR SESIÓN</button>
       <p className="mt-3 text-sm font-semibold text-[#999]">¿Quieres seguir aprendiendo? <Link href="/" className="font-black text-[#58a700]">Vuelve a tu ruta</Link></p>
+      <p className="mt-6 text-xs font-bold text-[#bbb]">Versión {process.env.NEXT_PUBLIC_APP_VERSION}</p>
     </div>
   );
 }
