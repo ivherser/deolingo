@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { z } from "zod";
 import { exerciseDataSchemas, exerciseTypeSchema, type ExerciseType } from "@/lib/exercises/types";
+import { GlossaryText } from "@/components/glossary-text";
 
 type Exercise = {
   id: string;
@@ -19,6 +20,7 @@ type LessonPayload = {
   description?: string;
   xpReward?: number;
   unit?: { title: string; color: string };
+  glossary?: Record<string, string>;
   exercises: Exercise[];
 };
 
@@ -46,6 +48,7 @@ const lessonSchema = z.object({
   description: z.string().optional(),
   xpReward: z.number().optional(),
   unit: z.object({ title: z.string(), color: z.string() }).optional(),
+  glossary: z.record(z.string(), z.string()).optional(),
   exercises: z.array(exerciseSchema).min(1),
 });
 const feedbackSchema = z.object({
@@ -434,6 +437,7 @@ export function ExerciseSession({
             setPairs,
             selectedLeft,
             setSelectedLeft,
+            glossary: lesson.glossary,
             disabled: Boolean(feedback) || checking,
           })}
         </div>
@@ -483,6 +487,7 @@ function renderExercise({
   setPairs,
   selectedLeft,
   setSelectedLeft,
+  glossary,
   disabled,
 }: {
   exercise: Exercise;
@@ -496,13 +501,20 @@ function renderExercise({
   setPairs: (value: Array<[string, string]> | ((current: Array<[string, string]>) => Array<[string, string]>)) => void;
   selectedLeft: string | null;
   setSelectedLeft: (value: string | null) => void;
+  glossary?: Record<string, string>;
   disabled: boolean;
 }) {
   if (exercise.type === "TRANSLATE_DE_ES" || exercise.type === "TRANSLATE_ES_DE") {
     const data = exerciseDataSchemas[exercise.type].parse(exercise.data);
     return (
       <div>
-        <div className="mb-4 rounded-2xl bg-[#f5f5f5] p-5 text-xl font-extrabold">{data.sourceText}</div>
+        <div className="mb-4 rounded-2xl bg-[#f5f5f5] p-5 text-xl font-extrabold">
+          {exercise.type === "TRANSLATE_DE_ES" ? (
+            <GlossaryText key={exercise.id} text={data.sourceText} glossary={glossary} />
+          ) : (
+            data.sourceText
+          )}
+        </div>
         <label className="block text-sm font-extrabold text-[#777]">
           Tu respuesta
           <textarea value={text} onChange={(event) => setText(event.target.value)} disabled={disabled} rows={3} autoFocus className="mt-2 w-full resize-y rounded-2xl border-2 border-[#e5e5e5] p-4 text-lg font-semibold outline-none focus:border-[#58cc02] disabled:bg-[#fafafa]" />
@@ -515,7 +527,11 @@ function renderExercise({
     const data = exerciseDataSchemas.MULTIPLE_CHOICE.parse(exercise.data);
     return (
       <div className="space-y-3">
-        {data.sourceText && <div className="mb-4 rounded-2xl bg-[#f5f5f5] p-5 text-xl font-extrabold">{data.sourceText}</div>}
+        {data.sourceText && (
+          <div className="mb-4 rounded-2xl bg-[#f5f5f5] p-5 text-xl font-extrabold">
+            <GlossaryText key={exercise.id} text={data.sourceText} glossary={glossary} />
+          </div>
+        )}
         {data.options.map((option, index) => (
           <button key={`${index}-${option}`} type="button" disabled={disabled} onClick={() => setChoice(index)} aria-pressed={choice === index} className={`flex w-full items-center gap-4 rounded-2xl border-2 p-4 text-left font-extrabold transition ${choice === index ? "border-[#58cc02] bg-[#f4ffed] text-[#4a861e]" : "border-[#e5e5e5] hover:bg-[#fafafa]"}`}>
             <span className={`flex h-8 w-8 items-center justify-center rounded-lg border-2 text-sm ${choice === index ? "border-[#58cc02] bg-[#58cc02] text-white" : "border-[#ddd] text-[#999]"}`}>{index + 1}</span>
@@ -549,7 +565,11 @@ function renderExercise({
     const [before, after] = data.sentence.split("___");
     return (
       <div>
-        <p className="mb-5 text-xl font-extrabold leading-relaxed">{before}<span className="mx-1 inline-block min-w-20 border-b-2 border-[#58cc02] text-center text-[#58a700]">{text || "…"}</span>{after}</p>
+        <p className="mb-5 text-xl font-extrabold leading-relaxed">
+          <GlossaryText key={`${exercise.id}-before`} text={before} glossary={glossary} />
+          <span className="mx-1 inline-block min-w-20 border-b-2 border-[#58cc02] text-center text-[#58a700]">{text || "…"}</span>
+          <GlossaryText key={`${exercise.id}-after`} text={after} glossary={glossary} />
+        </p>
         {data.options ? (
           <div className="flex flex-wrap gap-2">
             {data.options.map((option) => (
