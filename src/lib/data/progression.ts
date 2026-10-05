@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { gradeAnswer } from "@/lib/exercises/grading";
 import { parseExerciseData, type ExerciseType } from "@/lib/exercises/types";
+import { glossaryForTexts, lessonGlossaryTexts } from "@/lib/glossary";
 import {
   computeLessonXp,
   HEART_REFILL_AMOUNT,
@@ -136,21 +137,23 @@ export async function getLessonForUser(userId: string, lessonId: string) {
   if (!unlocked) {
     throw new LockedLessonError();
   }
+  const exercises = lesson.exercises.map((exercise) => {
+    const type = exercise.type as ExerciseType;
+    return {
+      id: exercise.id,
+      type,
+      prompt: exercise.prompt,
+      data: parseExerciseData(type, exercise.data),
+    };
+  });
   return {
     id: lesson.id,
     title: lesson.title,
     description: lesson.description,
     xpReward: lesson.xpReward,
     unit: lesson.unit,
-    exercises: lesson.exercises.map((exercise) => {
-      const type = exercise.type as ExerciseType;
-      return {
-        id: exercise.id,
-        type,
-        prompt: exercise.prompt,
-        data: parseExerciseData(type, exercise.data),
-      };
-    }),
+    exercises,
+    glossary: glossaryForTexts(lessonGlossaryTexts(exercises)),
   };
 }
 
